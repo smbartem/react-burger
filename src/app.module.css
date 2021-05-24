@@ -1,0 +1,9 @@
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 65%;
+  display: flex;
+}

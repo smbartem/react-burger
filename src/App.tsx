@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState} from 'react';
+import Header from './components/app-header/header';
+import BurgerIngredients from './components/burger-ingredients/burgerIngredients';
+import BurgerConstructor from './components/burger-constructor/burgerConstructor'
+import styles from './app.module.css';
+import burgerConstructor from './components/burger-constructor/burgerConstructor';
 
 function App() {
+  const [bun, setBun] = useState(null);
+  const [ingredients, setIngredients] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <main className={styles.main}>
+        <div className={styles.container}>
+          <BurgerIngredients 
+            ingredients={ingredients} 
+            setIngredients={setIngredients} 
+            bun={bun} setBun={setBun} 
+            setTotalPrice={setTotalPrice}
+            totalPrice={totalPrice}
+          />
+          <BurgerConstructor 
+            ingredients={ingredients} 
+            setIngredients={setIngredients} 
+            bun={bun}
+            totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
+          />
+        </div>
+      </main>
+    </>
   );
 }
 

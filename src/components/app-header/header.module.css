@@ -1,0 +1,35 @@
+.header {
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  background: #1C1C21;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 66.7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  padding: 0;
+}
+
+.menuItems {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 40px;
+  height: 56px;
+}
+
+.personalArea {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 40px;
+  height: 56px;
+}
