@@ -7,3 +7,27 @@
   width: 65%;
   display: flex;
 }
+
+@media screen and (max-width: 1830px) {
+  .container {
+    width: 75.7%;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .container {
+    width: 85.7%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .container {
+    width: 91.7%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .container {
+    width: 99%;
+  }
+}

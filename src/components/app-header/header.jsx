@@ -3,10 +3,10 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import Menu from './menu'
+import Menu from './menu';
 import styles from './header.module.css';
 
-export default () => (
+const Header = () => (
   <header className={styles.header}>
     <div className={styles.container}>
       <Menu />
@@ -20,3 +20,5 @@ export default () => (
     </div>
   </header>
 );
+
+export default Header;

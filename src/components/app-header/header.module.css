@@ -1,3 +1,12 @@
+li {
+  list-style-type: none; 
+ }
+
+ul {
+  margin: 0;
+  padding: 0;
+ }
+
 .header {
   height: 88px;
   display: flex;
@@ -33,3 +42,32 @@
   border-radius: 40px;
   height: 56px;
 }
+
+@media screen and (max-width: 1830px) {
+  .container {
+    width: 74%;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .container {
+    width: 84%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .container {
+    width: 99%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  
+}
+
