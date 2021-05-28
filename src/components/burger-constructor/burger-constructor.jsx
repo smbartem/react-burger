@@ -1,5 +1,4 @@
 import React from 'react';
-import * as _ from 'lodash';
 import {
   ConstructorElement,
   DragIcon,
@@ -7,11 +6,15 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import styles from './burgerConstructor.module.css';
+import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const { bun, ingredients, totalPrice, setIngredients, setTotalPrice } = props;
+  const { bun, ingredients } = props;
+  const bunTotalPrice = bun? bun.price * 2 : 0;
+  const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
+  const totalPrice = bunTotalPrice + ingredientsTotalPrice;
+  console.log(ingredients);
   return (
     <section className={styles.burgerConstructor}>
       <div className="mt-25 mb-10 ml-4">
@@ -26,15 +29,12 @@ const BurgerConstructor = (props) => {
             />
           </div>
         )}
-        {ingredients.length > 0 && (
-          <div
-            className={`pr-2 ${
-              ingredients.length > 5 && styles.scrollbar
-            }`}
+        {<div
+            className={`pr-2 ${styles.scrollbar}`}
           >
             {ingredients.map((el) => (
               <div
-                key={_.uniqueId(el._id)}
+                key={el.key}
                 className={`mb-4 ${styles.mainIngredients}`}
               >
                 <div className="mr-2">
@@ -48,7 +48,7 @@ const BurgerConstructor = (props) => {
               </div>
             ))}
           </div>
-        )}
+        }
         {bun && (
           <div className="ml-8">
             <ConstructorElement
@@ -77,11 +77,8 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  bun: PropTypes.string.isRequired,
+  bun: PropTypes.object.isRequired,
   ingredients: PropTypes.array.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-  setIngredients: PropTypes.func.isRequired,
-  setTotalPrice: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

@@ -9,21 +9,26 @@ ul {
 
 .header {
   height: 88px;
-  display: flex;
-  justify-content: center;
   background: #1C1C21;
   box-sizing: border-box;
 }
 
 .container {
-  width: 66.7%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  max-width: 1280px;
+  margin: auto;
+  height: 88px;
+}
+
+.flex {
+  display: flex;
 }
 
 .menu {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
   padding: 0;
 }
 
@@ -42,32 +47,3 @@ ul {
   border-radius: 40px;
   height: 56px;
 }
-
-@media screen and (max-width: 1830px) {
-  .container {
-    width: 74%;
-  }
-}
-
-@media screen and (max-width: 1600px) {
-  .container {
-    width: 84%;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .container {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 1300px) {
-  .container {
-    width: 99%;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  
-}
-

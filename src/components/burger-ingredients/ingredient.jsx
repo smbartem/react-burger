@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burgerIngredients.module.css'
+import styles from './burger-ingredients.module.css';
 
 const Ingredient = (props) => {
   const { data, onClick, counter } = props;
