@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import Ingridient from './ingredient';
-import data from '../../utils/data.json';
 import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients, bun, selectIngridient,
+    ingredients, bun, selectIngridient, data
   } = props;
   const [current, setCurrent] = useState('Булки');
   
@@ -111,6 +110,7 @@ BurgerIngredients.propTypes = {
   bun: PropTypes.object.isRequired,
   ingredients: PropTypes.array.isRequired,
   selectIngridient: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 }
 
 export default BurgerIngredients;

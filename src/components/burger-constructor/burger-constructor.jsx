@@ -14,7 +14,6 @@ const BurgerConstructor = (props) => {
   const bunTotalPrice = bun? bun.price * 2 : 0;
   const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
   const totalPrice = bunTotalPrice + ingredientsTotalPrice;
-  console.log(ingredients);
   return (
     <section className={styles.burgerConstructor}>
       <div className="mt-25 mb-10 ml-4">

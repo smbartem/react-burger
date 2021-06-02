@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import * as _ from 'lodash';
-import Header from './app-header/header';
-import BurgerIngredients from './burger-ingredients/burger-ingredients';
-import BurgerConstructor from './burger-constructor/burger-constructor';
+import Header from '../app-header/header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import styles from './app.module.css';
+import data from '../../utils/data.json';
 
 function App() {
   const [bun, setBun] = useState(null);
@@ -27,6 +28,7 @@ function App() {
             ingredients={ingredients}
             bun={bun}
             selectIngridient={selectIngredient}
+            data={data}
           />
           <BurgerConstructor
             ingredients={ingredients}
