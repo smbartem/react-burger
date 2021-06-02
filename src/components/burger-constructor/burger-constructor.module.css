@@ -1,0 +1,37 @@
+.burgerConstructor {
+  width: 48.4%;
+  box-sizing: border-box;
+}
+
+.scrollbar {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar{
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+
+.mainIngredients {
+  display: flex;
+  align-items: center;
+}
+
+.orderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.totalPriceContainer {
+  display: flex;
+  align-items: center;
+}

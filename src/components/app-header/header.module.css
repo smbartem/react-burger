@@ -1,0 +1,49 @@
+li {
+  list-style-type: none; 
+ }
+
+ul {
+  margin: 0;
+  padding: 0;
+ }
+
+.header {
+  height: 88px;
+  background: #1C1C21;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  max-width: 1280px;
+  margin: auto;
+  height: 88px;
+}
+
+.flex {
+  display: flex;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+}
+
+.menuItems {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 40px;
+  height: 56px;
+}
+
+.personalArea {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 40px;
+  height: 56px;
+}
