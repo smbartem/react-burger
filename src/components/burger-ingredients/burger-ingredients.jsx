@@ -6,7 +6,7 @@ import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients, bun, selectIngridient, data
+    ingredients, bun, selectIngridient, data, handleModalOrderDetails
   } = props;
   const [current, setCurrent] = useState('Булки');
   
@@ -44,6 +44,7 @@ const BurgerIngredients = (props) => {
                   key={el._id}
                   onClick={selectIngridient}
                   counter={bun && bun._id === el._id ? 1 : null}
+                  handleModalOrderDetails={handleModalOrderDetails}
                 />
               );
             })}
@@ -70,6 +71,7 @@ const BurgerIngredients = (props) => {
                   onClick={selectIngridient}
                   key={el._id}
                   counter={counter}
+                  handleModalOrderDetails={handleModalOrderDetails}
                 />
               );
             })}
@@ -96,6 +98,7 @@ const BurgerIngredients = (props) => {
                   onClick={selectIngridient}
                   key={el._id}
                   counter={counter}
+                  handleModalOrderDetails={handleModalOrderDetails}
                 />
               );
             })}

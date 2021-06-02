@@ -10,7 +10,7 @@ import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const { bun, ingredients } = props;
+  const { bun, ingredients, modalIngredientDetails, handleModalIngredientDetails } = props;
   const bunTotalPrice = bun? bun.price * 2 : 0;
   const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
   const totalPrice = bunTotalPrice + ingredientsTotalPrice;
@@ -67,7 +67,7 @@ const BurgerConstructor = (props) => {
           </p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handleModalIngredientDetails}>
           Оформить заказ
         </Button>
       </div>

@@ -6,9 +6,9 @@ import {
 import styles from './burger-ingredients.module.css';
 
 const Ingredient = (props) => {
-  const { data, onClick, counter } = props;
+  const { data, onClick, counter, handleModalOrderDetails } = props;
   return (
-    <div className={`${styles.ingredientContainer} pl-4 pr-4`} onClick={onClick(data)}>
+    <div className={`${styles.ingredientContainer} pl-4 pr-4`} onClick={onClick(data)} onClick={handleModalOrderDetails}>
       <div className={`${styles.ingredient} pl-4 pr-4`}>
         <img src={data.image} alt="" />
         <div className={`${styles.ingredientPrice} mt-1 mb-1`}>
