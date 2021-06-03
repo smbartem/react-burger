@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useMemo } from "react";
 import {
   ConstructorElement,
   DragIcon,
   CurrencyIcon,
   Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import styles from './burger-constructor.module.css';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const { bun, ingredients, modalIngredientDetails, handleModalIngredientDetails } = props;
-  const bunTotalPrice = bun? bun.price * 2 : 0;
-  const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
-  const totalPrice = bunTotalPrice + ingredientsTotalPrice;
+  const { bun, ingredients, handleModalIngredientDetails } = props;
+  const bunTotalPrice = useMemo(() => (bun ? bun.price * 2 : 0), [bun]);
+  const ingredientsTotalPrice = useMemo(
+    () => ingredients.reduce((acc, el) => (acc += el.price), 0),
+    [ingredients]
+  );
+  const totalPrice = useMemo(
+    () => bunTotalPrice + ingredientsTotalPrice,
+    [bunTotalPrice, ingredientsTotalPrice]
+  );
   return (
     <section className={styles.burgerConstructor}>
       <div className="mt-25 mb-10 ml-4">
@@ -28,14 +34,10 @@ const BurgerConstructor = (props) => {
             />
           </div>
         )}
-        {<div
-            className={`pr-2 ${styles.scrollbar}`}
-          >
+        {
+          <div className={`pr-2 ${styles.scrollbar}`}>
             {ingredients.map((el) => (
-              <div
-                key={el.key}
-                className={`mb-4 ${styles.mainIngredients}`}
-              >
+              <div key={el.key} className={`mb-4 ${styles.mainIngredients}`}>
                 <div className="mr-2">
                   <DragIcon type="primary" />
                 </div>
@@ -62,12 +64,14 @@ const BurgerConstructor = (props) => {
       </div>
       <div className={`${styles.orderContainer} mr-4`}>
         <div className={`${styles.totalPriceContainer} mr-10`}>
-          <p className="text text_type_digits-medium mr-2">
-            {totalPrice}
-          </p>
+          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={handleModalIngredientDetails}>
+        <Button
+          type="primary"
+          size="large"
+          onClick={handleModalIngredientDetails}
+        >
           Оформить заказ
         </Button>
       </div>
@@ -76,8 +80,22 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  bun: PropTypes.object.isRequired,
-  ingredients: PropTypes.array.isRequired,
-}
+  bun: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
+  ]),
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  handleModalIngredientDetails: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

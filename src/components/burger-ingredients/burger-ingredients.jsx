@@ -110,10 +110,27 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-  bun: PropTypes.object.isRequired,
-  ingredients: PropTypes.array.isRequired,
+  bun: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }).isRequired,
+  ]),
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  handleModalOrderDetails: PropTypes.func.isRequired,
   selectIngridient: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
-}
+  data: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    }).isRequired,)
+  ]),
+};
+
 
 export default BurgerIngredients;

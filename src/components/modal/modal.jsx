@@ -1,5 +1,6 @@
 import React from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 import styles from "./modal.module.css";
 
 const Modal = (props) => {
@@ -21,6 +22,11 @@ const Modal = (props) => {
       </main>
     </div>
   );
+};
+
+Modal.propTypes = {
+  handleModal: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default Modal;

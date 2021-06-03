@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as _ from "lodash";
 import Header from "../app-header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -10,32 +10,37 @@ import OrderDetails from "../order-details/order-details";
 const url = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [bun, setBun] = useState(null);
   const [ingredients, setIngredients] = useState([]);
   const [modalIngredientDetails, setModalIngredientDetails] = useState(false);
   const [modalOrderDetails, setModalOrderDetails] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(false);
 
-  const selectIngredient = (ingredient) => (e) => {
-    e.preventDefault();
-    if (ingredient.type === "bun") {
-      setBun(ingredient);
-    } else {
-      setIngredients([
-        ...ingredients,
-        { ...ingredient, key: _.uniqueId(ingredient._id) },
-      ]);
-    }
-  };
+  const selectIngredient = useCallback(
+    (ingredient) => (e) => {
+      e.preventDefault();
+      if (ingredient.type === "bun") {
+        setBun(ingredient);
+      } else {
+        setIngredients([
+          ...ingredients,
+          { ...ingredient, key: _.uniqueId(ingredient._id) },
+        ]);
+      }
+      setSelectedIngredient(ingredient);
+    },
+    [ingredients]
+  );
 
-  const handleModalIngredientDetails = () => {
+  const handleModalIngredientDetails = useCallback(() => {
     setModalIngredientDetails(!modalIngredientDetails);
-  };
+  }, [modalIngredientDetails]);
 
-  const handleModalOrderDetails = () => {
+  const handleModalOrderDetails = useCallback(() => {
     setModalOrderDetails(!modalOrderDetails);
-  };
+  }, [modalOrderDetails]);
 
   useEffect(() => {
     fetch(url)
@@ -69,20 +74,18 @@ function App() {
             <BurgerConstructor
               ingredients={ingredients}
               bun={bun}
-              modalIngredientDetails={modalIngredientDetails}
               handleModalIngredientDetails={handleModalIngredientDetails}
             />
           </div>
         )}
       </main>
       {modalIngredientDetails && (
-        <IngredientDetails
-          handleModal={handleModalIngredientDetails}
-        />
+        <IngredientDetails handleModal={handleModalIngredientDetails} />
       )}
       {modalOrderDetails && (
         <OrderDetails
           handleModal={handleModalOrderDetails}
+          selectedIngredient={selectedIngredient}
         />
       )}
     </>

@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from "react";
+import PropTypes from 'prop-types';
 import styles from "./modal-overlay.module.css";
 
 
@@ -26,6 +27,10 @@ const ModalOverlay = (props) => {
       onKeyDown={handleKeyDown}
     ></div>
   );
+};
+
+ModalOverlay.propTypes = {
+  handleModal: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;

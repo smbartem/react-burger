@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import Modal from "../modal/modal";
 import doneLogo from "../../images/done.svg";
@@ -29,6 +30,10 @@ const IngredientDetails = (props) => {
     </>,
     modalRoot
   );
+};
+
+IngredientDetails.propTypes = {
+  handleModal: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;
