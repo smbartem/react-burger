@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import Ingridient from './ingredient';
+import Ingredient from './ingredient';
 import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients, bun, selectIngridient, data, handleModalOrderDetails
+    ingredients, bun, selectIngredient, data, handleModalOrderDetails
   } = props;
   const [current, setCurrent] = useState('Булки');
   
@@ -39,10 +39,10 @@ const BurgerIngredients = (props) => {
                 return null;
               }
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
                   key={el._id}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   counter={bun && bun._id === el._id ? 1 : null}
                   handleModalOrderDetails={handleModalOrderDetails}
                 />
@@ -66,9 +66,9 @@ const BurgerIngredients = (props) => {
               ).length;
               counter = counter === 0 ? null : counter;
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
                   handleModalOrderDetails={handleModalOrderDetails}
@@ -93,9 +93,9 @@ const BurgerIngredients = (props) => {
               ).length;
               counter = counter === 0 ? null : counter;
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
                   handleModalOrderDetails={handleModalOrderDetails}
@@ -122,7 +122,7 @@ BurgerIngredients.propTypes = {
     })
   ).isRequired,
   handleModalOrderDetails: PropTypes.func.isRequired,
-  selectIngridient: PropTypes.func.isRequired,
+  selectIngredient: PropTypes.func.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.oneOf([null]).isRequired,
     PropTypes.arrayOf(PropTypes.shape({

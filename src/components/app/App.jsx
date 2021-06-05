@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import * as _ from "lodash";
-import Header from "../app-header/header";
+import Header from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
+import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 
@@ -14,38 +15,37 @@ function App() {
   const [error, setError] = useState(null);
   const [bun, setBun] = useState(null);
   const [ingredients, setIngredients] = useState([]);
-  const [modalIngredientDetails, setModalIngredientDetails] = useState(false);
-  const [modalOrderDetails, setModalOrderDetails] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState(false);
+  const [isModalIngredientDetailsOpen, setIsModalIngredientDetailsOpen] =
+    useState(false);
+  const [isModalOrderDetailsOpen, setIsModalOrderDetailsOpen] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
-  const selectIngredient = useCallback(
-    (ingredient) => (e) => {
-      e.preventDefault();
-      if (ingredient.type === "bun") {
-        setBun(ingredient);
-      } else {
-        setIngredients([
-          ...ingredients,
-          { ...ingredient, key: _.uniqueId(ingredient._id) },
-        ]);
-      }
-      setSelectedIngredient(ingredient);
-    },
-    [ingredients]
-  );
+  const selectIngredient = (ingredient) => (e) => {
+    e.preventDefault();
+    if (ingredient.type === "bun") {
+      setBun(ingredient);
+    } else {
+      setIngredients([
+        ...ingredients,
+        { ...ingredient, key: _.uniqueId(ingredient._id) },
+      ]);
+    }
+    setSelectedIngredient(ingredient);
+  };
 
-  const handleModalIngredientDetails = useCallback(() => {
-    setModalIngredientDetails(!modalIngredientDetails);
-  }, [modalIngredientDetails]);
+  const handleModalIngredientDetails = () =>
+    setIsModalIngredientDetailsOpen(!isModalIngredientDetailsOpen);
 
-  const handleModalOrderDetails = useCallback(() => {
-    setModalOrderDetails(!modalOrderDetails);
-  }, [modalOrderDetails]);
+  const handleModalOrderDetails = () =>
+    setIsModalOrderDetailsOpen(!isModalOrderDetailsOpen);
 
   useEffect(() => {
     fetch(url)
       .then((response) => {
-        return response.json();
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка: ${response.status}`);
       })
       .then((data) => {
         setData(data.data);
@@ -67,7 +67,7 @@ function App() {
             <BurgerIngredients
               ingredients={ingredients}
               bun={bun}
-              selectIngridient={selectIngredient}
+              selectIngredient={selectIngredient}
               data={data}
               handleModalOrderDetails={handleModalOrderDetails}
             />
@@ -79,14 +79,15 @@ function App() {
           </div>
         )}
       </main>
-      {modalIngredientDetails && (
-        <IngredientDetails handleModal={handleModalIngredientDetails} />
+      {isModalIngredientDetailsOpen && (
+        <Modal handleModal={handleModalIngredientDetails} title="">
+          <IngredientDetails />
+        </Modal>
       )}
-      {modalOrderDetails && (
-        <OrderDetails
-          handleModal={handleModalOrderDetails}
-          selectedIngredient={selectedIngredient}
-        />
+      {isModalOrderDetailsOpen && (
+        <Modal handleModal={handleModalOrderDetails} title="Детали ингредиента">
+          <OrderDetails selectedIngredient={selectedIngredient} />
+        </Modal>
       )}
     </>
   );

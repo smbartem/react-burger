@@ -1,52 +1,70 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import Modal from "../modal/modal";
-import styles from "./order-details.module.css"
+import PropTypes from "prop-types";
+import styles from "./order-details.module.css";
 
 const OrderDetails = (props) => {
-  const modalRoot = document.getElementById("react-modals");
-  const { handleModal, selectedIngredient } = props;
-  
-  return ReactDOM.createPortal(
+  const { selectedIngredient } = props;
+
+  return (
     <>
-      <ModalOverlay
-        handleModal={handleModal}
+      <img
+        src={selectedIngredient.image_large}
+        alt="ingredientPicture"
+        className="mb-4"
       />
-      <Modal
-        handleModal={handleModal}
-        title="Детали ингредиента"
-      >
-        <img src={selectedIngredient.image_large} alt="ingredientPicture" className="mb-4"/>
-        <h2 className="text text_type_main-medium mb-8">{selectedIngredient.name}</h2>
-        <div className={`${styles.informationContainer} mb-15`}>
-          <div className={styles.flexCenter}>
-            <p className="text text_type_main-default text_color_inactive">Калории,ккал</p>
-            <p className="text text_type_main-default text_color_inactive">{selectedIngredient.calories}</p>
-          </div>
-          <div className={styles.flexCenter}>
-            <p className="text text_type_main-default text_color_inactive">Белки, г</p>
-            <p className="text text_type_main-default text_color_inactive">{selectedIngredient.proteins}</p>
-          </div>
-          <div className={styles.flexCenter}>
-            <p className="text text_type_main-default text_color_inactive">Жиры, г</p>
-            <p className="text text_type_main-default text_color_inactive">{selectedIngredient.fat}</p>
-          </div>
-          <div className={styles.flexCenter}>
-            <p className="text text_type_main-default text_color_inactive">Углеводы, г</p>
-            <p className="text text_type_main-default text_color_inactive">{selectedIngredient.carbohydrates}</p>
-          </div>
+      <h2 className="text text_type_main-medium mb-8">
+        {selectedIngredient.name}
+      </h2>
+      <div className={`${styles.informationContainer} mb-15`}>
+        <div className={styles.flexCenter}>
+          <p className="text text_type_main-default text_color_inactive">
+            Калории,ккал
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            {selectedIngredient.calories}
+          </p>
         </div>
-      </Modal>
-    </>,
-    modalRoot
+        <div className={styles.flexCenter}>
+          <p className="text text_type_main-default text_color_inactive">
+            Белки, г
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            {selectedIngredient.proteins}
+          </p>
+        </div>
+        <div className={styles.flexCenter}>
+          <p className="text text_type_main-default text_color_inactive">
+            Жиры, г
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            {selectedIngredient.fat}
+          </p>
+        </div>
+        <div className={styles.flexCenter}>
+          <p className="text text_type_main-default text_color_inactive">
+            Углеводы, г
+          </p>
+          <p className="text text_type_main-default text_color_inactive">
+            {selectedIngredient.carbohydrates}
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 
 OrderDetails.propTypes = {
-  handleModal: PropTypes.func.isRequired,
-  selectedIngredient: PropTypes.func.isRequired,
+  selectedIngredient: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      calories: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+    }).isRequired,
+  ]),
 };
 
 export default OrderDetails;

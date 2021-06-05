@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -11,15 +11,11 @@ import styles from "./burger-constructor.module.css";
 const BurgerConstructor = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { bun, ingredients, handleModalIngredientDetails } = props;
-  const bunTotalPrice = useMemo(() => (bun ? bun.price * 2 : 0), [bun]);
-  const ingredientsTotalPrice = useMemo(
-    () => ingredients.reduce((acc, el) => (acc += el.price), 0),
-    [ingredients]
-  );
-  const totalPrice = useMemo(
-    () => bunTotalPrice + ingredientsTotalPrice,
-    [bunTotalPrice, ingredientsTotalPrice]
-  );
+  
+  const bunTotalPrice = bun? bun.price * 2 : 0;
+  const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
+  const totalPrice = bunTotalPrice + ingredientsTotalPrice;
+
   return (
     <section className={styles.burgerConstructor}>
       <div className="mt-25 mb-10 ml-4">
