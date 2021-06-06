@@ -6,7 +6,7 @@ import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients, bun, selectIngredient, data, handleModalOrderDetails
+    ingredients, bun, selectIngredient, data, handleModalIngredientDetails
   } = props;
   const [current, setCurrent] = useState('Булки');
   
@@ -44,7 +44,7 @@ const BurgerIngredients = (props) => {
                   key={el._id}
                   onClick={selectIngredient}
                   counter={bun && bun._id === el._id ? 1 : null}
-                  handleModalOrderDetails={handleModalOrderDetails}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -71,7 +71,7 @@ const BurgerIngredients = (props) => {
                   onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
-                  handleModalOrderDetails={handleModalOrderDetails}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -98,7 +98,7 @@ const BurgerIngredients = (props) => {
                   onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
-                  handleModalOrderDetails={handleModalOrderDetails}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -121,7 +121,7 @@ BurgerIngredients.propTypes = {
       _id: PropTypes.string.isRequired,
     })
   ).isRequired,
-  handleModalOrderDetails: PropTypes.func.isRequired,
+  handleModalIngredientDetails: PropTypes.func.isRequired,
   selectIngredient: PropTypes.func.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.oneOf([null]).isRequired,

@@ -5,41 +5,42 @@ import PropTypes from "prop-types";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-const Modal = (props) => {
-  const { children, handleModal, title } = props;
-  const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals");
 
-  const handleKeyDown = useCallback(
+const Modal = (props) => {
+  const { children, toggleModal, title } = props;
+  
+  const closeModalWindowByEsc = useCallback(
     (e) => {
       if (e.keyCode === 27) {
-        handleModal();
+        toggleModal();
       }
     },
-    [handleModal]
+    [toggleModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown, false);
+    document.addEventListener("keydown", closeModalWindowByEsc, false);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown, false);
+      document.removeEventListener("keydown", closeModalWindowByEsc, false);
     };
-  }, [handleKeyDown]);
+  }, [closeModalWindowByEsc]);
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay handleKeyDown={handleKeyDown} handleModal={handleModal} />
+      <ModalOverlay toggleModal={toggleModal} />
       <div className={styles.modal}>
         <header className={`${styles.modalHeader} pt-10 pl-10 pr-10`}>
           <h2 className="text text_type_main-large">{title}</h2>
           <button
             type="button"
             className={styles.modalButton}
-            onClick={handleModal}
+            onClick={toggleModal}
           >
             <CloseIcon type="primary" />
           </button>
         </header>
-        <main className={`${styles.modalMain} mt-4`}>{children}</main>
+        <section className={`${styles.modalMain} mt-4`}>{children}</section>
       </div>
     </>,
     modalRoot
@@ -47,7 +48,7 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-  handleModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
 

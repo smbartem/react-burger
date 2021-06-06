@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 
 const Ingredient = (props) => {
-  const { data, onClick, counter, handleModalOrderDetails } = props;
+  const { data, onClick, counter, handleModalIngredientDetails } = props;
   return (
     <div className={`${styles.ingredientContainer} pl-4 pr-4`} onClick={onClick(data)} >
-      <div onClick={handleModalOrderDetails}>
+      <div onClick={handleModalIngredientDetails}>
       <div className={`${styles.ingredient} pl-4 pr-4`}>
         <img src={data.image} alt="" />
         <div className={`${styles.ingredientPrice} mt-1 mb-1`}>
@@ -30,7 +30,7 @@ Ingredient.propTypes = {
     PropTypes.oneOf([null]).isRequired,
     PropTypes.number.isRequired,
   ]),  
-  handleModalOrderDetails: PropTypes.func.isRequired,
+  handleModalIngredientDetails: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.oneOf([null]).isRequired,

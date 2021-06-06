@@ -69,24 +69,24 @@ function App() {
               bun={bun}
               selectIngredient={selectIngredient}
               data={data}
-              handleModalOrderDetails={handleModalOrderDetails}
+              handleModalIngredientDetails={handleModalIngredientDetails}
             />
             <BurgerConstructor
               ingredients={ingredients}
               bun={bun}
-              handleModalIngredientDetails={handleModalIngredientDetails}
+              handleModalOrderDetails={handleModalOrderDetails}
             />
           </div>
         )}
       </main>
-      {isModalIngredientDetailsOpen && (
-        <Modal handleModal={handleModalIngredientDetails} title="">
-          <IngredientDetails />
+      {isModalOrderDetailsOpen && (
+        <Modal toggleModal={handleModalOrderDetails} title="">
+          <OrderDetails />
         </Modal>
       )}
-      {isModalOrderDetailsOpen && (
-        <Modal handleModal={handleModalOrderDetails} title="Детали ингредиента">
-          <OrderDetails selectedIngredient={selectedIngredient} />
+      {isModalIngredientDetailsOpen && (
+        <Modal toggleModal={handleModalIngredientDetails} title="Детали ингредиента">
+          <IngredientDetails selectedIngredient={selectedIngredient} />
         </Modal>
       )}
     </>
