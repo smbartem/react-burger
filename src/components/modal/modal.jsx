@@ -12,7 +12,7 @@ const Modal = (props) => {
   
   const closeModalWindowByEsc = useCallback(
     (e) => {
-      if (e.keyCode === 27) {
+      if (e.key === 'Escape') {
         toggleModal();
       }
     },
