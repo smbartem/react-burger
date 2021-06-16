@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -7,10 +7,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
+import { BunContext, IngredientsContext } from "../../services/context";
 
 const BurgerConstructor = (props) => {
   // eslint-disable-next-line no-unused-vars
-  const { bun, ingredients, handleModalOrderDetails } = props;
+  const { handleModalOrderDetails, handleOrder } = props;
+
+  const bun = useContext(BunContext);
+  const ingredients = useContext(IngredientsContext);
   
   const bunTotalPrice = bun? bun.price * 2 : 0;
   const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
@@ -66,7 +70,7 @@ const BurgerConstructor = (props) => {
         <Button
           type="primary"
           size="large"
-          onClick={handleModalOrderDetails}
+          onClick={bun && ingredients && handleOrder}
         >
           Оформить заказ
         </Button>
@@ -76,22 +80,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  bun: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    }).isRequired,
-  ]),
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  handleModalOrderDetails: PropTypes.func.isRequired,
+  handleOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

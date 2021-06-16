@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import Ingredient from "./ingredient";
 import styles from "./burger-ingredients.module.css";
+import { BunContext, IngredientsContext } from "../../services/context";
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients,
-    bun,
     selectIngredient,
     data,
     handleModalIngredientDetails,
   } = props;
+
+  const bun = useContext(BunContext);
+  const ingredients = useContext(IngredientsContext);
+
   const [current, setCurrent] = useState("Булки");
 
   const handleScroll = (e) => {
@@ -30,7 +33,6 @@ const BurgerIngredients = (props) => {
       <div style={{ display: "flex" }}>
         <a href="#bun">
           <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
-            {" "}
             Булки
           </Tab>
         </a>
@@ -131,17 +133,6 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-  bun: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-    }).isRequired,
-  ]),
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
   handleModalIngredientDetails: PropTypes.func.isRequired,
   selectIngredient: PropTypes.func.isRequired,
   data: PropTypes.oneOfType([

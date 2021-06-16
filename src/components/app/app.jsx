@@ -7,8 +7,11 @@ import styles from "./app.module.css";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
+import { BunContext, IngredientsContext } from "../../services/context";
+const axios = require('axios');
 
-const url = "https://norma.nomoreparties.space/api/ingredients";
+const getDataUrl = "https://norma.nomoreparties.space/api/ingredients";
+const postOrderUrl = "https://norma.nomoreparties.space/api/orders";
 
 function App() {
   const [data, setData] = useState(null);
@@ -19,6 +22,7 @@ function App() {
     useState(false);
   const [isModalOrderDetailsOpen, setIsModalOrderDetailsOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const selectIngredient = (ingredient) => (e) => {
     e.preventDefault();
@@ -40,18 +44,25 @@ function App() {
     setIsModalOrderDetailsOpen(!isModalOrderDetailsOpen);
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка: ${response.status}`);
-      })
+    axios.get(getDataUrl)
       .then((data) => {
-        setData(data.data);
+        setData(data.data.data);
       })
       .catch((error) => setError(`${error}`));
   }, []);
+
+  const handleOrder = () => {
+    const ingredientsId = ingredients.map((el) => el._id);
+    const orderInfo = [bun._id, ...ingredientsId];
+    axios.post(postOrderUrl, {
+      "ingredients": orderInfo
+    })
+      .then((data) => {
+        setOrderNumber(data.data.order.number);
+      })
+      .then(() => handleModalOrderDetails())
+      .catch((error) => setError(`${error}`));
+  };
 
   return (
     <>
@@ -64,28 +75,31 @@ function App() {
       <main className={styles.main}>
         {data && (
           <div className={styles.container}>
-            <BurgerIngredients
-              ingredients={ingredients}
-              bun={bun}
-              selectIngredient={selectIngredient}
-              data={data}
-              handleModalIngredientDetails={handleModalIngredientDetails}
-            />
-            <BurgerConstructor
-              ingredients={ingredients}
-              bun={bun}
-              handleModalOrderDetails={handleModalOrderDetails}
-            />
+            <BunContext.Provider value={bun}>
+              <IngredientsContext.Provider value={ingredients}>
+                <BurgerIngredients
+                  selectIngredient={selectIngredient}
+                  data={data}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
+                />
+                <BurgerConstructor
+                  handleOrder={handleOrder}
+                />
+              </IngredientsContext.Provider>
+            </BunContext.Provider>
           </div>
         )}
       </main>
       {isModalOrderDetailsOpen && (
         <Modal toggleModal={handleModalOrderDetails} title="">
-          <OrderDetails />
+          <OrderDetails orderNumber={orderNumber}/>
         </Modal>
       )}
       {isModalIngredientDetailsOpen && (
-        <Modal toggleModal={handleModalIngredientDetails} title="Детали ингредиента">
+        <Modal
+          toggleModal={handleModalIngredientDetails}
+          title="Детали ингредиента"
+        >
           <IngredientDetails selectedIngredient={selectedIngredient} />
         </Modal>
       )}
