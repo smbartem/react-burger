@@ -40,6 +40,11 @@ ul {
   height: 56px;
 }
 
+.menuNavLink {
+  display: flex;
+  align-items: center;
+}
+
 .personalArea {
   display: flex;
   align-items: center;

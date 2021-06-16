@@ -1,49 +1,71 @@
-import React, { useState } from 'react';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import Ingridient from './ingredient';
-import styles from './burger-ingredients.module.css';
+import React, { useState } from "react";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import Ingredient from "./ingredient";
+import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = (props) => {
   const {
-    ingredients, bun, selectIngridient, data
+    ingredients,
+    bun,
+    selectIngredient,
+    data,
+    handleModalIngredientDetails,
   } = props;
-  const [current, setCurrent] = useState('Булки');
-  
+  const [current, setCurrent] = useState("Булки");
+
+  const handleScroll = (e) => {
+    if (e.target.scrollTop < 140) {
+      setCurrent("Булки");
+    } else if (e.target.scrollTop < 560 && e.target.scrollTop > 140) {
+      setCurrent("Соусы");
+    } else {
+      setCurrent("Начинки");
+    }
+  };
+
   return (
     <section className={`${styles.burgerIngredients} mr-10`}>
       <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
-      <div style={{ display: 'flex' }}>
-        <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
-          <a href="#bun">Булки</a>
-        </Tab>
-        <Tab value="Соусы" active={current === 'Соусы'} onClick={setCurrent}>
-          <a href="#sauce">Соусы</a>
-        </Tab>
-        <Tab
-          value="Начинки"
-          active={current === 'Начинки'}
-          onClick={setCurrent}
-        >
-          <a href="#main">Начинки</a>
-        </Tab>
+      <div style={{ display: "flex" }}>
+        <a href="#bun">
+          <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+            {" "}
+            Булки
+          </Tab>
+        </a>
+        <a href="#sauce">
+          <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+            Соусы
+          </Tab>
+        </a>
+        <a href="#main">
+          <Tab
+            value="Начинки"
+            active={current === "Начинки"}
+            onClick={setCurrent}
+          >
+            Начинки
+          </Tab>
+        </a>
       </div>
-      <div className={`mt-10 ${styles.scrollbar}`}>
+      <div className={`mt-10 ${styles.scrollbar}`} onScroll={handleScroll}>
         <div>
           <h2 className="text text_type_main-medium" id="bun">
             Булки
           </h2>
-          <div className={`${styles.burgerIngredientsContainer}`}>
+          <div className={`mr-4 ml-4 ${styles.burgerIngredientsContainer}`}>
             {data.map((el) => {
-              if (el.type !== 'bun') {
+              if (el.type !== "bun") {
                 return null;
               }
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
                   key={el._id}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   counter={bun && bun._id === el._id ? 1 : null}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -57,19 +79,20 @@ const BurgerIngredients = (props) => {
             className={`mt-6 mb-10 mr-4 ml-4 ${styles.burgerIngredientsContainer}`}
           >
             {data.map((el) => {
-              if (el.type !== 'sauce') {
+              if (el.type !== "sauce") {
                 return null;
               }
               let counter = ingredients.filter(
-                (element) => el._id === element._id,
+                (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -83,19 +106,20 @@ const BurgerIngredients = (props) => {
             className={`mt-6 mb-10 mr-4 ml-4 ${styles.burgerIngredientsContainer}`}
           >
             {data.map((el) => {
-              if (el.type !== 'main') {
+              if (el.type !== "main") {
                 return null;
               }
               let counter = ingredients.filter(
-                (element) => el._id === element._id,
+                (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
               return (
-                <Ingridient
+                <Ingredient
                   data={el}
-                  onClick={selectIngridient}
+                  onClick={selectIngredient}
                   key={el._id}
                   counter={counter}
+                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -107,10 +131,28 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-  bun: PropTypes.object.isRequired,
-  ingredients: PropTypes.array.isRequired,
-  selectIngridient: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
-}
+  bun: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }).isRequired,
+  ]),
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  handleModalIngredientDetails: PropTypes.func.isRequired,
+  selectIngredient: PropTypes.func.isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+      }).isRequired
+    ),
+  ]),
+};
 
 export default BurgerIngredients;

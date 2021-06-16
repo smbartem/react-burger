@@ -1,0 +1,12 @@
+.informationContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 73%;
+}
+
+.flexCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
