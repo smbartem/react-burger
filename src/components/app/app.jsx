@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as _ from "lodash";
-import Header from "../app-header/app-header";
+import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
@@ -53,7 +53,7 @@ function App() {
 
   const handleOrder = () => {
     const ingredientsId = ingredients.map((el) => el._id);
-    const orderInfo = [bun._id, ...ingredientsId];
+    const orderInfo = [bun._id, ...ingredientsId, bun._id];
     axios.post(postOrderUrl, {
       "ingredients": orderInfo
     })
@@ -66,7 +66,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <AppHeader />
       {error && (
         <h2 className={`${styles.main} text text_type_main-medium`}>
           {error}. Перезагрузите страницу
