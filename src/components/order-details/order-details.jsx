@@ -1,9 +1,9 @@
 import React from "react";
 import doneLogo from "../../images/done.svg";
 
-const OrderDetails = () => (
+const OrderDetails = (props) => (
   <>
-    <h2 className="text text_type_digits-large mb-8">034536</h2>
+    <h2 className="text text_type_digits-large mb-8">{props.orderNumber}</h2>
     <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
     <img src={doneLogo} alt="doneLogo" className="mb-15" />
     <p className="text text_type_main-default mb-2">
