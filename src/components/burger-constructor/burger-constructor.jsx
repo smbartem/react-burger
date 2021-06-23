@@ -1,28 +1,51 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { useDrop, useDrag } from "react-dnd";
 import styles from "./burger-constructor.module.css";
-import { BunContext, IngredientsContext } from "../../services/context";
+import { getOrder } from "../../services/reducers/app-reducer";
+import {
+  DELETE_INGREDIENT_FROM_INGREDIENTS,
+  SET_SELECT_INGREDIENT,
+} from "../../services/actions/app-actions";
 
-const BurgerConstructor = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { handleModalOrderDetails, handleOrder } = props;
+const BurgerConstructor = () => {
+  const { bun, ingredients } = useSelector((store) => store.appReducer);
+  const dispatch = useDispatch();
 
-  const bun = useContext(BunContext);
-  const ingredients = useContext(IngredientsContext);
-  
-  const bunTotalPrice = bun? bun.price * 2 : 0;
-  const ingredientsTotalPrice = ingredients.reduce((acc, el) => acc += el.price, 0);
+  const bunTotalPrice = bun ? bun.price * 2 : 0;
+  const ingredientsTotalPrice = ingredients.reduce(
+    (acc, el) => (acc += el.price),
+    0
+  );
   const totalPrice = bunTotalPrice + ingredientsTotalPrice;
+
+  const [{ isDragContainer }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(element) {
+      dispatch({ type: SET_SELECT_INGREDIENT, ingredient: element });
+    },
+    collect: (monitor) => ({
+      isDragContainer: monitor.canDrop(),
+    }),
+  });
+
+  const dragContainerStyle = isDragContainer
+    ? { border: "1px solid lightgreen" }
+    : null;
 
   return (
     <section className={styles.burgerConstructor}>
-      <div className="mt-25 mb-10 ml-4">
+      <div
+        className={`mt-25 mb-10 ml-4 ${styles.burgerConstructorIngredientPlace}`}
+        ref={dropTarget}
+        style={dragContainerStyle}
+      >
         {bun && (
           <div className="ml-8 mb-4">
             <ConstructorElement
@@ -36,8 +59,11 @@ const BurgerConstructor = (props) => {
         )}
         {
           <div className={`pr-2 ${styles.scrollbar}`}>
-            {ingredients.map((el) => (
-              <div key={el.key} className={`mb-4 ${styles.mainIngredients}`}>
+            {ingredients.map((el, index) => (
+              <div
+                key={el.key}
+                className={`mb-4 ${styles.mainIngredients}`}
+              >
                 <div className="mr-2">
                   <DragIcon type="primary" />
                 </div>
@@ -45,6 +71,12 @@ const BurgerConstructor = (props) => {
                   text={el.name}
                   price={el.price}
                   thumbnail={el.image}
+                  handleClose={() =>
+                    dispatch({
+                      type: DELETE_INGREDIENT_FROM_INGREDIENTS,
+                      key: el.key,
+                    })
+                  }
                 />
               </div>
             ))}
@@ -70,17 +102,15 @@ const BurgerConstructor = (props) => {
         <Button
           type="primary"
           size="large"
-          onClick={bun && ingredients && handleOrder}
+          onClick={() =>
+            bun && ingredients && dispatch(getOrder(ingredients, bun))
+          }
         >
           Оформить заказ
         </Button>
       </div>
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  handleOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

@@ -1,22 +1,29 @@
 import React, { useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { CLOSE_MODAL_ORDER_DETAILS, CLOSE_MODAL_INGREDIENT_DETAILS } from "../../services/actions/interface-actions";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
-  const { children, toggleModal, title } = props;
+  const { children, title } = props;
+  const dispatch = useDispatch();
+  const { isModalIngredientDetailsOpen, isModalOrderDetailsOpen } = useSelector(store => store.interfaceReducer);
+  const handleModalClose = useCallback(() => {
+    isModalIngredientDetailsOpen && dispatch({type: CLOSE_MODAL_INGREDIENT_DETAILS});
+    isModalOrderDetailsOpen && dispatch({type: CLOSE_MODAL_ORDER_DETAILS});
+  }, [dispatch, isModalIngredientDetailsOpen, isModalOrderDetailsOpen])
   
   const closeModalWindowByEsc = useCallback(
     (e) => {
       if (e.key === 'Escape') {
-        toggleModal();
+        handleModalClose();
       }
     },
-    [toggleModal]
+    [handleModalClose]
   );
 
   useEffect(() => {
@@ -28,14 +35,14 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay toggleModal={toggleModal} />
+      <ModalOverlay />
       <div className={styles.modal}>
         <header className={`${styles.modalHeader} pt-10 pl-10 pr-10`}>
           <h2 className="text text_type_main-large">{title}</h2>
           <button
             type="button"
             className={styles.modalButton}
-            onClick={toggleModal}
+            onClick={handleModalClose}
           >
             <CloseIcon type="primary" />
           </button>
@@ -45,11 +52,6 @@ const Modal = (props) => {
     </>,
     modalRoot
   );
-};
-
-Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
 };
 
 export default Modal;
