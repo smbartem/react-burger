@@ -23,11 +23,11 @@ const Ingredient = (props) => {
   return (
     <div
       className={`${styles.ingredientContainer} pl-4 pr-4`}
+      ref={dragRef}
+      style={dragStyle}
       onClick={() =>
         dispatch({ type: SET_SELECT_INGREDIENT, ingredient: data })
       }
-      ref={dragRef}
-      style={dragStyle}
     >
       <div onClick={() => dispatch({ type: OPEN_MODAL_INGREDIENT_DETAILS })}>
         <div className={`${styles.ingredient} pl-4 pr-4`}>

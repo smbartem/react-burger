@@ -2,17 +2,14 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop } from "react-dnd";
 import styles from "./burger-constructor.module.css";
 import { getOrder } from "../../services/reducers/app-reducer";
-import {
-  DELETE_INGREDIENT_FROM_INGREDIENTS,
-  SET_SELECT_INGREDIENT,
-} from "../../services/actions/app-actions";
+import { SET_SELECT_INGREDIENT } from "../../services/actions/app-actions";
+import BurgerConstructorInnerIngredients from "./burger-constructor-ingredients";
 
 const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector((store) => store.appReducer);
@@ -35,7 +32,7 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const dragContainerStyle = isDragContainer
+  const burgerConstructorIngredientPlaceStyle = isDragContainer
     ? { border: "1px solid lightgreen" }
     : null;
 
@@ -44,7 +41,7 @@ const BurgerConstructor = () => {
       <div
         className={`mt-25 mb-10 ml-4 ${styles.burgerConstructorIngredientPlace}`}
         ref={dropTarget}
-        style={dragContainerStyle}
+        style={burgerConstructorIngredientPlaceStyle}
       >
         {bun && (
           <div className="ml-8 mb-4">
@@ -60,25 +57,7 @@ const BurgerConstructor = () => {
         {
           <div className={`pr-2 ${styles.scrollbar}`}>
             {ingredients.map((el, index) => (
-              <div
-                key={el.key}
-                className={`mb-4 ${styles.mainIngredients}`}
-              >
-                <div className="mr-2">
-                  <DragIcon type="primary" />
-                </div>
-                <ConstructorElement
-                  text={el.name}
-                  price={el.price}
-                  thumbnail={el.image}
-                  handleClose={() =>
-                    dispatch({
-                      type: DELETE_INGREDIENT_FROM_INGREDIENTS,
-                      key: el.key,
-                    })
-                  }
-                />
-              </div>
+              <BurgerConstructorInnerIngredients el={el} index={index} key={el._id}/>
             ))}
           </div>
         }

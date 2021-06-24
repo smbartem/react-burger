@@ -5,6 +5,7 @@ import {
   SET_ORDER_NUMBER,
   SET_SELECT_INGREDIENT,
   DELETE_INGREDIENT_FROM_INGREDIENTS,
+  REPLACE_INNER_DRAG_INGREDIENT
 } from "../../services/actions/app-actions";
 import { OPEN_MODAL_ORDER_DETAILS } from "../../services/actions/interface-actions"
 const axios = require("axios");
@@ -91,6 +92,19 @@ export const appReducer = (state = initialState, action) => {
         ...state,
         ingredients: state.ingredients.filter((el) => el.key !== action.key)
       }
+    }
+    case REPLACE_INNER_DRAG_INGREDIENT: {
+      const dragCard = [...state.ingredients][action.dragIndex];
+      if (!dragCard){return}
+        const newArray = [
+          ...state.ingredients,
+        ]
+        newArray.splice(action.dragIndex, 1)
+        newArray.splice(action.hoverIndex, 0, dragCard)
+        return { 
+          ...state, 
+          ingredients: newArray
+        };
     }
     default: {
       return state;
