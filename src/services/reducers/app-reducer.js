@@ -7,10 +7,6 @@ import {
   DELETE_INGREDIENT_FROM_INGREDIENTS,
   REPLACE_INNER_DRAG_INGREDIENT
 } from "../../services/actions/app-actions";
-import { OPEN_MODAL_ORDER_DETAILS } from "../../services/actions/interface-actions"
-const axios = require("axios");
-const getDataUrl = "https://norma.nomoreparties.space/api/ingredients";
-const postOrderUrl = "https://norma.nomoreparties.space/api/orders";
 
 const initialState = {
   data: null,
@@ -20,36 +16,6 @@ const initialState = {
   selectedIngredient: null,
   orderNumber: null,
 };
-
-export function getData() {
-  return function(dispatch) {
-    axios
-    .get(getDataUrl)
-    .then((data) => {
-      dispatch({ type: SET_DATA, data: data.data.data });
-    })
-    .catch((error) => dispatch({ type: SET_ERROR, error: `${error}` }));
-  }
-};
-
-export function getOrder(ingredients, bun) {
-  return function(dispatch) {
-    const ingredientsId = ingredients.map((el) => el._id);
-    const orderInfo = [bun._id, ...ingredientsId, bun._id];
-    axios
-      .post(postOrderUrl, {
-        ingredients: orderInfo,
-      })
-      .then((data) => {
-        dispatch({
-          type: SET_ORDER_NUMBER,
-          orderNumber: data.data.order.number,
-        });
-      })
-      .then(() => dispatch({ type: OPEN_MODAL_ORDER_DETAILS }))
-      .catch((error) => dispatch({ type: SET_ERROR, error: `${error}` }));
-  }
-}
 
 export const appReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -85,6 +51,8 @@ export const appReducer = (state = initialState, action) => {
       return {
         ...state,
         orderNumber: action.orderNumber,
+        bun: null,
+        ingredients: [],
       };
     }
     case DELETE_INGREDIENT_FROM_INGREDIENTS: {

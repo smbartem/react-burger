@@ -9,7 +9,7 @@ const IngredientDetails = () => {
     <>
       <img
         src={selectedIngredient.image_large}
-        alt="ingredientPicture"
+        alt={selectedIngredient.name}
         className="mb-4"
       />
       <h2 className="text text_type_main-medium mb-8">

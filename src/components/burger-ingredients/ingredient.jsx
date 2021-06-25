@@ -31,7 +31,7 @@ const Ingredient = (props) => {
     >
       <div onClick={() => dispatch({ type: OPEN_MODAL_INGREDIENT_DETAILS })}>
         <div className={`${styles.ingredient} pl-4 pr-4`}>
-          <img src={data.image} alt="" />
+          <img src={data.image} alt={data.name} />
           <div className={`${styles.ingredientPrice} mt-1 mb-1`}>
             <p className="text text_type_digits-default mr-1">{data.price}</p>
             <CurrencyIcon type="primary" />

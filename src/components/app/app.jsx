@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
@@ -9,7 +9,8 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../services/reducers/app-reducer";
+import { getData } from "../../services/actions/app-actions";
+import { CLOSE_MODAL_INGREDIENT_DETAILS,  CLOSE_MODAL_ORDER_DETAILS} from "../../services/actions/interface-actions"
 
 function App() {
   const { data, error } = useSelector((store) => store.appReducer);
@@ -17,6 +18,11 @@ function App() {
     (store) => store.interfaceReducer
   );
   const dispatch = useDispatch();
+
+  const handleModalClose = useCallback(() => {
+    dispatch({type: CLOSE_MODAL_INGREDIENT_DETAILS});
+    dispatch({type: CLOSE_MODAL_ORDER_DETAILS});
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getData());
@@ -41,12 +47,12 @@ function App() {
         )}
       </main>
       {isModalOrderDetailsOpen && (
-        <Modal title="">
+        <Modal title="" handleModalClose={handleModalClose}>
           <OrderDetails />
         </Modal>
       )}
       {isModalIngredientDetailsOpen && (
-        <Modal title="Детали ингредиента">
+        <Modal title="Детали ингредиента" handleModalClose={handleModalClose}>
           <IngredientDetails />
         </Modal>
       )}

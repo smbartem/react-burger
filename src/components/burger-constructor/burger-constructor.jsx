@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop } from "react-dnd";
 import styles from "./burger-constructor.module.css";
-import { getOrder } from "../../services/reducers/app-reducer";
+import { getOrder } from "../../services/actions/app-actions";
 import { SET_SELECT_INGREDIENT } from "../../services/actions/app-actions";
 import BurgerConstructorInnerIngredients from "./burger-constructor-ingredients";
 
@@ -57,7 +57,7 @@ const BurgerConstructor = () => {
         {
           <div className={`pr-2 ${styles.scrollbar}`}>
             {ingredients.map((el, index) => (
-              <BurgerConstructorInnerIngredients el={el} index={index} key={el._id}/>
+              <BurgerConstructorInnerIngredients el={el} index={index} key={el.key}/>
             ))}
           </div>
         }

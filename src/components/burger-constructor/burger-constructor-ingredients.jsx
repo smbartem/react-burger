@@ -5,7 +5,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop, useDrag } from "react-dnd";
 import styles from "./burger-constructor.module.css";
-import { DELETE_INGREDIENT_FROM_INGREDIENTS, REPLACE_INNER_DRAG_INGREDIENT } from "../../services/actions/app-actions";
+import {
+  DELETE_INGREDIENT_FROM_INGREDIENTS,
+  REPLACE_INNER_DRAG_INGREDIENT,
+} from "../../services/actions/app-actions";
 import { useDispatch } from "react-redux";
 
 const BurgerConstructorInnerIngredients = ({ el, index }) => {
@@ -14,6 +17,9 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
   /* не очень понимаю, как сделать так, чтобы элементы не прыгали при DnD, подскажите, пожалуйста*/
   const [, dropInner] = useDrop({
     accept: "innerIngredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
     hover(item, monitor) {
       if (!ref.current) {
         return;
@@ -34,7 +40,8 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch({type: REPLACE_INNER_DRAG_INGREDIENT, dragIndex, hoverIndex})
+      dispatch({ type: REPLACE_INNER_DRAG_INGREDIENT, dragIndex, hoverIndex });
+      monitor.getItem().index = hoverIndex;
     },
   });
 
@@ -49,10 +56,11 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
   });
 
   const dragElStyle = isDragging ? { opacity: "0" } : null;
+
   dragInner(dropInner(ref));
+
   return (
     <div
-      key={el.key}
       className={`mb-4 ${styles.mainIngredients}`}
       ref={ref}
       style={dragElStyle}
