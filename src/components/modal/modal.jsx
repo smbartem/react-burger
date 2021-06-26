@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./modal.module.css";
@@ -44,6 +45,12 @@ const Modal = (props) => {
     </>,
     modalRoot
   );
+};
+
+Modal.propTypes = {
+  handleModalClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Modal;

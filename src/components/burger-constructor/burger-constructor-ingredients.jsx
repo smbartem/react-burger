@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   DragIcon,
@@ -14,7 +15,7 @@ import { useDispatch } from "react-redux";
 const BurgerConstructorInnerIngredients = ({ el, index }) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
-  /* не очень понимаю, как сделать так, чтобы элементы не прыгали при DnD, подскажите, пожалуйста*/
+  
   const [, dropInner] = useDrop({
     accept: "innerIngredient",
     collect: (monitor) => ({
@@ -81,6 +82,15 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
       />
     </div>
   );
+};
+
+BurgerConstructorInnerIngredients.propTypes = {
+  index: PropTypes.number.isRequired,
+  el: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    }),
 };
 
 export default BurgerConstructorInnerIngredients;

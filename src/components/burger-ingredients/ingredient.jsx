@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
@@ -46,6 +47,21 @@ const Ingredient = (props) => {
       </div>
     </div>
   );
+};
+
+Ingredient.propTypes = {
+  counter: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.number.isRequired,
+  ]),
+  data: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    }),
+  ]),
 };
 
 export default Ingredient;
