@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import * as _ from "lodash";
+import React, { useEffect, useCallback } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -7,62 +8,25 @@ import styles from "./app.module.css";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
-import { BunContext, IngredientsContext } from "../../services/context";
-const axios = require('axios');
-
-const getDataUrl = "https://norma.nomoreparties.space/api/ingredients";
-const postOrderUrl = "https://norma.nomoreparties.space/api/orders";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../../services/actions/app-actions";
+import { CLOSE_MODAL_INGREDIENT_DETAILS,  CLOSE_MODAL_ORDER_DETAILS} from "../../services/actions/interface-actions"
 
 function App() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [bun, setBun] = useState(null);
-  const [ingredients, setIngredients] = useState([]);
-  const [isModalIngredientDetailsOpen, setIsModalIngredientDetailsOpen] =
-    useState(false);
-  const [isModalOrderDetailsOpen, setIsModalOrderDetailsOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
+  const { data, error } = useSelector((store) => store.appReducer);
+  const { isModalIngredientDetailsOpen, isModalOrderDetailsOpen } = useSelector(
+    (store) => store.interfaceReducer
+  );
+  const dispatch = useDispatch();
 
-  const selectIngredient = (ingredient) => (e) => {
-    e.preventDefault();
-    if (ingredient.type === "bun") {
-      setBun(ingredient);
-    } else {
-      setIngredients([
-        ...ingredients,
-        { ...ingredient, key: _.uniqueId(ingredient._id) },
-      ]);
-    }
-    setSelectedIngredient(ingredient);
-  };
-
-  const handleModalIngredientDetails = () =>
-    setIsModalIngredientDetailsOpen(!isModalIngredientDetailsOpen);
-
-  const handleModalOrderDetails = () =>
-    setIsModalOrderDetailsOpen(!isModalOrderDetailsOpen);
+  const handleModalClose = useCallback(() => {
+    dispatch({type: CLOSE_MODAL_INGREDIENT_DETAILS});
+    dispatch({type: CLOSE_MODAL_ORDER_DETAILS});
+  }, [dispatch]);
 
   useEffect(() => {
-    axios.get(getDataUrl)
-      .then((data) => {
-        setData(data.data.data);
-      })
-      .catch((error) => setError(`${error}`));
-  }, []);
-
-  const handleOrder = () => {
-    const ingredientsId = ingredients.map((el) => el._id);
-    const orderInfo = [bun._id, ...ingredientsId, bun._id];
-    axios.post(postOrderUrl, {
-      "ingredients": orderInfo
-    })
-      .then((data) => {
-        setOrderNumber(data.data.order.number);
-      })
-      .then(() => handleModalOrderDetails())
-      .catch((error) => setError(`${error}`));
-  };
+    dispatch(getData());
+  }, [dispatch]);
 
   return (
     <>
@@ -75,32 +39,21 @@ function App() {
       <main className={styles.main}>
         {data && (
           <div className={styles.container}>
-            <BunContext.Provider value={bun}>
-              <IngredientsContext.Provider value={ingredients}>
-                <BurgerIngredients
-                  selectIngredient={selectIngredient}
-                  data={data}
-                  handleModalIngredientDetails={handleModalIngredientDetails}
-                />
-                <BurgerConstructor
-                  handleOrder={handleOrder}
-                />
-              </IngredientsContext.Provider>
-            </BunContext.Provider>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </DndProvider>
           </div>
         )}
       </main>
       {isModalOrderDetailsOpen && (
-        <Modal toggleModal={handleModalOrderDetails} title="">
-          <OrderDetails orderNumber={orderNumber}/>
+        <Modal title="" handleModalClose={handleModalClose}>
+          <OrderDetails />
         </Modal>
       )}
       {isModalIngredientDetailsOpen && (
-        <Modal
-          toggleModal={handleModalIngredientDetails}
-          title="Детали ингредиента"
-        >
-          <IngredientDetails selectedIngredient={selectedIngredient} />
+        <Modal title="Детали ингредиента" handleModalClose={handleModalClose}>
+          <IngredientDetails />
         </Modal>
       )}
     </>

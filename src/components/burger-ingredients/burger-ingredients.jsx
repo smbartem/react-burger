@@ -1,29 +1,33 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import Ingredient from "./ingredient";
 import styles from "./burger-ingredients.module.css";
-import { BunContext, IngredientsContext } from "../../services/context";
+import { SET_CURRENT_BURGER_INGREDIENTS_NAME } from "../../services/actions/interface-actions";
 
-const BurgerIngredients = (props) => {
-  const {
-    selectIngredient,
-    data,
-    handleModalIngredientDetails,
-  } = props;
-
-  const bun = useContext(BunContext);
-  const ingredients = useContext(IngredientsContext);
-
-  const [current, setCurrent] = useState("Булки");
+const BurgerIngredients = () => {
+  const { data, bun, ingredients } = useSelector((store) => store.appReducer);
+  const currentBurgerIngredientsName = useSelector(
+    (store) => store.interfaceReducer.currentBurgerIngredientsName
+  );
+  const dispatch = useDispatch();
 
   const handleScroll = (e) => {
     if (e.target.scrollTop < 140) {
-      setCurrent("Булки");
+      dispatch({
+        type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+        ingredientsName: "Булки",
+      });
     } else if (e.target.scrollTop < 560 && e.target.scrollTop > 140) {
-      setCurrent("Соусы");
+      dispatch({
+        type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+        ingredientsName: "Соусы",
+      });
     } else {
-      setCurrent("Начинки");
+      dispatch({
+        type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+        ingredientsName: "Начинки",
+      });
     }
   };
 
@@ -32,20 +36,43 @@ const BurgerIngredients = (props) => {
       <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
       <div style={{ display: "flex" }}>
         <a href="#bun">
-          <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+          <Tab
+            value="Булки"
+            active={currentBurgerIngredientsName === "Булки"}
+            onClick={() =>
+              dispatch({
+                type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+                ingredientsName: "Булки",
+              })
+            }
+          >
             Булки
           </Tab>
         </a>
         <a href="#sauce">
-          <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+          <Tab
+            value="Соусы"
+            active={currentBurgerIngredientsName === "Соусы"}
+            onClick={() =>
+              dispatch({
+                type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+                ingredientsName: "Соусы",
+              })
+            }
+          >
             Соусы
           </Tab>
         </a>
         <a href="#main">
           <Tab
             value="Начинки"
-            active={current === "Начинки"}
-            onClick={setCurrent}
+            active={currentBurgerIngredientsName === "Начинки"}
+            onClick={() =>
+              dispatch({
+                type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
+                ingredientsName: "Начинки",
+              })
+            }
           >
             Начинки
           </Tab>
@@ -65,9 +92,7 @@ const BurgerIngredients = (props) => {
                 <Ingredient
                   data={el}
                   key={el._id}
-                  onClick={selectIngredient}
                   counter={bun && bun._id === el._id ? 1 : null}
-                  handleModalIngredientDetails={handleModalIngredientDetails}
                 />
               );
             })}
@@ -88,15 +113,7 @@ const BurgerIngredients = (props) => {
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
-              return (
-                <Ingredient
-                  data={el}
-                  onClick={selectIngredient}
-                  key={el._id}
-                  counter={counter}
-                  handleModalIngredientDetails={handleModalIngredientDetails}
-                />
-              );
+              return <Ingredient data={el} key={el._id} counter={counter} />;
             })}
           </div>
         </div>
@@ -115,35 +132,13 @@ const BurgerIngredients = (props) => {
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
-              return (
-                <Ingredient
-                  data={el}
-                  onClick={selectIngredient}
-                  key={el._id}
-                  counter={counter}
-                  handleModalIngredientDetails={handleModalIngredientDetails}
-                />
-              );
+              return <Ingredient data={el} key={el._id} counter={counter} />;
             })}
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  handleModalIngredientDetails: PropTypes.func.isRequired,
-  selectIngredient: PropTypes.func.isRequired,
-  data: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-      }).isRequired
-    ),
-  ]),
 };
 
 export default BurgerIngredients;

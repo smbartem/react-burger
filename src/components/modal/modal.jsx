@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect } from "react";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("react-modals");
 
 const Modal = (props) => {
-  const { children, toggleModal, title } = props;
-  
+  const { children, title, handleModalClose } = props;
+    
   const closeModalWindowByEsc = useCallback(
     (e) => {
       if (e.key === 'Escape') {
-        toggleModal();
+        handleModalClose();
       }
     },
-    [toggleModal]
+    [handleModalClose]
   );
 
   useEffect(() => {
@@ -28,14 +28,14 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay toggleModal={toggleModal} />
+      <ModalOverlay handleModalClose={handleModalClose}/>
       <div className={styles.modal}>
         <header className={`${styles.modalHeader} pt-10 pl-10 pr-10`}>
           <h2 className="text text_type_main-large">{title}</h2>
           <button
             type="button"
             className={styles.modalButton}
-            onClick={toggleModal}
+            onClick={handleModalClose}
           >
             <CloseIcon type="primary" />
           </button>
@@ -48,8 +48,9 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
+  handleModalClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Modal;
