@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Logo,
   ProfileIcon,
@@ -30,17 +31,19 @@ const AppHeader = () => (
           </ul>
         </li>
         <li>
-          <a href="##">
+          <Link to="/">
             <Logo />
-          </a>
+          </Link>
         </li>
         <li className={`${styles.personalArea} pl-5 pr-5 pb-4 pt-4`}>
-          <a className={styles.menuNavLink} href="##">
-            <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default text_color_inactive ml-2">
-              Личный кабинет
-            </p>
-          </a>
+          <Link to="/profile">
+            <div style={{ display: "flex" }}>
+              <ProfileIcon type="secondary" />
+              <p className="text text_type_main-default text_color_inactive ml-2">
+                Личный кабинет
+              </p>
+            </div>
+          </Link>
         </li>
       </ul>
     </nav>
