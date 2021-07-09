@@ -1,19 +1,16 @@
 import AppHeader from "../components/app-header/app-header";
 import PersonalAreaMenu from "../components/personal-area/personal-area-menu";
-import PersonalAreaForm from "../components/personal-area/personal-area-form"
 import styles from "./personal-area.module.css"
 
-export const ProfilePage = () => (
+export const OrdersHistoryPage = () => (
   <>
     <AppHeader />
     <div className={styles.container}>
       <PersonalAreaMenu
-        activeLink="profile"
-        description="изменить свои персональные данные"
+        activeLink="ordersHistory"
+        description="просмотреть свою историю заказов"
       />
-      <div>
-        <PersonalAreaForm />
-      </div>
+      <div></div>
     </div>
   </>
 );

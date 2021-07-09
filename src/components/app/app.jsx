@@ -6,7 +6,8 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   NotFoundPage,
-  ProfilePage
+  ProfilePage,
+  OrdersHistoryPage
 } from "../../pages";
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route path="/profile" exact={true}>
           <ProfilePage />
+        </Route>
+        <Route path="/profile/orders" exact={true}>
+          <OrdersHistoryPage />
         </Route>
         <Route path="/" exact={true}>
           <HomePage />
