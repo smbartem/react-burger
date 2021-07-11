@@ -8,15 +8,24 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   SET_FORM_EMAIL,
   SET_FORM_PASSWORD,
+  UNSET_ERROR,
   makeLogin
 } from "../../services/actions/authorization-actions";
 import styles from "./authentication-form.module.css";
+import { useEffect } from "react";
 
 const LoginForm = () => {
   const { formEmail, formPassword, error, redirectToMain } = useSelector(
     (store) => store.authorizationReducer
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: UNSET_ERROR })
+    }
+  }, [dispatch])
+
   return (
     <>
       <h2 className="mt-20 mb-6 text text_type_main-medium">Вход</h2>

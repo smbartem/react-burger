@@ -2,21 +2,28 @@ import {
   SET_FORM_NAME,
   SET_FORM_EMAIL,
   SET_FORM_PASSWORD,
-  SET_USER,
+  SET_LOGIN,
   SET_REDIRECT_TO_MAIN,
   UNSET_REDIRECT_TO_MAIN,
   SET_LOGOUT,
+  SET_REDIRECT_TO_RESET_PASSWORD,
+  UNSET_REDIRECT_TO_RESET_PASSWORD,
+  SET_REDIRECT_TO_LOGIN,
+  SET_CONFIRMATION_CODE,
+  UNSET_ERROR,
+  SET_ERROR,
 } from "../../services/actions/authorization-actions";
-import { SET_ERROR } from "../actions/app-actions";
 
 const initialState = {
   error: null,
   formName: '',
   formEmail: '',
   formPassword: '',
-  email: null,
-  name: null,
   redirectToMain: false,
+  redirectToResetPassword: false,
+  redirectToLogin: false,
+  formConfirmationCode: '',
+  authorized: false,
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -39,11 +46,10 @@ export const authorizationReducer = (state = initialState, action) => {
         formPassword: action.formPassword,
       };
     }
-    case SET_USER: {
+    case SET_LOGIN: {
       return {
         ...state,
-        email: action.user.email,
-        name: action.user.name,
+        authorized: true
       };
     }
     case SET_ERROR: {
@@ -67,6 +73,36 @@ export const authorizationReducer = (state = initialState, action) => {
     case SET_LOGOUT: {
       return {
         ...initialState,
+      }
+    }
+    case SET_REDIRECT_TO_RESET_PASSWORD: {
+      return {
+        ...state,
+        redirectToResetPassword: true,
+      }
+    }
+    case UNSET_REDIRECT_TO_RESET_PASSWORD: {
+      return {
+        ...state,
+        redirectToResetPassword: false,
+      }
+    }
+    case SET_REDIRECT_TO_LOGIN: {
+      return {
+        ...state,
+        redirectToLogin: true
+      }
+    }
+    case SET_CONFIRMATION_CODE: {
+      return {
+        ...state,
+        formConfirmationCode: action.formConfirmationCode
+      }
+    }
+    case UNSET_ERROR: {
+      return {
+        ...state,
+        error: null,
       }
     }
     default: {

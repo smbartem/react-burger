@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import {
   SET_DATA,
-  SET_ERROR,
+  SET_MAIN_ERROR,
   SET_ORDER_NUMBER,
   SET_SELECT_INGREDIENT,
   DELETE_INGREDIENT_FROM_INGREDIENTS,
@@ -25,7 +25,7 @@ export const appReducer = (state = initialState, action) => {
         data: action.data,
       };
     }
-    case SET_ERROR: {
+    case SET_MAIN_ERROR: {
       return {
         ...state,
         error: action.error,

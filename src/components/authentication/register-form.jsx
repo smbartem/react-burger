@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -10,6 +11,7 @@ import {
   SET_FORM_NAME,
   SET_FORM_EMAIL,
   SET_FORM_PASSWORD,
+  UNSET_ERROR,
   register,
 } from "../../services/actions/authorization-actions";
 import styles from "./authentication-form.module.css";
@@ -19,6 +21,12 @@ const RegisterForm = () => {
     (store) => store.authorizationReducer
   );
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    return () => {
+      dispatch({ type: UNSET_ERROR })
+    }
+  }, [dispatch])
 
   return (
     <>

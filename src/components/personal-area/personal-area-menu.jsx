@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { makeLogout } from "../../services/actions/authorization-actions";
 
 const PersonalAreaMenu = ({ activeLink, description }) => {
   const dispatch = useDispatch();
-  const { error } = useSelector((store) => store.authorizationReducer)
+  const { error, redirectToLogin } = useSelector((store) => store.authorizationReducer)
   return (
     <div className="mr-15">
       {error && <h2 className="mb-6 text text_type_main-medium" style={{color: "red"}}>{error}</h2>}
@@ -48,6 +48,7 @@ const PersonalAreaMenu = ({ activeLink, description }) => {
       <p className="text text_type_main-default text_color_inactive">
         {description}
       </p>
+      { redirectToLogin && <Redirect to="/" /> }
     </div>
   );
 };
