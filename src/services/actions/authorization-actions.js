@@ -35,7 +35,7 @@ export const refreshAccessToken = (dispatch) => {
     .then((data) => {
       const accessToken = data.data.accessToken.split("Bearer ")[1];
       const refreshToken = data.data.refreshToken;
-      setCookie("accessToken", accessToken, { expires: 12 });
+      setCookie("accessToken", accessToken, { expires: 1200 });
       setCookie("refreshToken", refreshToken);
     })
     .catch((error) => catchError(dispatch, error));
@@ -77,7 +77,7 @@ export const register = (email, password, name) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: 12 });
+        setCookie("accessToken", accessToken, { expires: 1200 });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({ type: UNSET_REDIRECT_TO_MAIN });
@@ -97,7 +97,7 @@ export const makeLogin = (email, password) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: 12 });
+        setCookie("accessToken", accessToken, { expires: 1200 });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({
