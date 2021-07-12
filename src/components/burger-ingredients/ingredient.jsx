@@ -23,12 +23,11 @@ const Ingredient = (props) => {
   const dragStyle = isDrag ? { opacity: "0.1" } : null;
   return (
     <div
-      className={`${styles.ingredientContainer} pl-4 pr-4`}
       ref={dragRef}
       style={dragStyle}
-      onClick={() =>
-        dispatch({ type: SET_SELECT_INGREDIENT, ingredient: data })
-      }
+      onClick={() => {
+        dispatch({ type: SET_SELECT_INGREDIENT, ingredient: data });
+      }}
     >
       <div onClick={() => dispatch({ type: OPEN_MODAL_INGREDIENT_DETAILS })}>
         <div className={`${styles.ingredient} pl-4 pr-4`}>

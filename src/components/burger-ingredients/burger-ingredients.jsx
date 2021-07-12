@@ -1,11 +1,13 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import Ingredient from "./ingredient";
 import styles from "./burger-ingredients.module.css";
 import { SET_CURRENT_BURGER_INGREDIENTS_NAME } from "../../services/actions/interface-actions";
 
 const BurgerIngredients = () => {
+  let location = useLocation();
   const { data, bun, ingredients } = useSelector((store) => store.appReducer);
   const currentBurgerIngredientsName = useSelector(
     (store) => store.interfaceReducer.currentBurgerIngredientsName
@@ -89,11 +91,19 @@ const BurgerIngredients = () => {
                 return null;
               }
               return (
-                <Ingredient
-                  data={el}
+                <Link
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    state: { background: location },
+                  }}
+                  className={`${styles.ingredientContainer} pl-4 pr-4`}
                   key={el._id}
-                  counter={bun && bun._id === el._id ? 1 : null}
-                />
+                >
+                  <Ingredient
+                    data={el}
+                    counter={bun && bun._id === el._id ? 1 : null}
+                  />
+                </Link>
               );
             })}
           </div>
@@ -113,7 +123,18 @@ const BurgerIngredients = () => {
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
-              return <Ingredient data={el} key={el._id} counter={counter} />;
+              return (
+                <Link
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    state: { background: location },
+                  }}
+                  className={`${styles.ingredientContainer} pl-4 pr-4`}
+                  key={el._id}
+                >
+                  <Ingredient data={el} counter={counter} />
+                </Link>
+              );
             })}
           </div>
         </div>
@@ -132,7 +153,18 @@ const BurgerIngredients = () => {
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
-              return <Ingredient data={el} key={el._id} counter={counter} />;
+              return (
+                <Link
+                  to={{
+                    pathname: `/ingredients/${el._id}`,
+                    state: { background: location },
+                  }}
+                  className={`${styles.ingredientContainer} pl-4 pr-4`}
+                  key={el._id}
+                >
+                  <Ingredient data={el} counter={counter} />
+                </Link>
+              );
             })}
           </div>
         </div>

@@ -22,8 +22,12 @@ export const UNSET_REDIRECT_TO_RESET_PASSWORD = "UNSET_REDIRECT_TO_RESET_PASSWOR
 export const SET_REDIRECT_TO_LOGIN = "SET_REDIRECT_TO_LOGIN";
 export const SET_CONFIRMATION_CODE = "SET_CONFIRMATION_CODE";
 export const UNSET_ERROR = "UNSET_ERROR";
+export const UNSET_REDIRECT_TO_LOGIN = "UNSET_REDIRECT_TO_LOGIN";
+export const SET_REDIRECT_TO_LOGIN_FOR_ORDER = "SET_REDIRECT_TO_LOGIN_FOR_ORDER";
+export const UNSET_REDIRECT_TO_LOGIN_FOR_ORDER = "UNSET_REDIRECT_TO_LOGIN_FOR_ORDER"
 
-const refreshAccessToken = (dispatch) => {
+
+export const refreshAccessToken = (dispatch) => {
   return axios
     .post(tokenRefreshUrl, {
       token: `${getCookie("refreshToken")}`,
@@ -31,7 +35,7 @@ const refreshAccessToken = (dispatch) => {
     .then((data) => {
       const accessToken = data.data.accessToken.split("Bearer ")[1];
       const refreshToken = data.data.refreshToken;
-      setCookie("accessToken", accessToken, { expires: 120 });
+      setCookie("accessToken", accessToken, { expires: 12 });
       setCookie("refreshToken", refreshToken);
     })
     .catch((error) => catchError(dispatch, error));
@@ -73,7 +77,7 @@ export const register = (email, password, name) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: 120 });
+        setCookie("accessToken", accessToken, { expires: 12 });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({ type: UNSET_REDIRECT_TO_MAIN });
@@ -93,7 +97,7 @@ export const makeLogin = (email, password) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: 120 });
+        setCookie("accessToken", accessToken, { expires: 12 });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({
