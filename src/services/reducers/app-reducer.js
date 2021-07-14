@@ -3,7 +3,6 @@ import {
   SET_DATA,
   SET_MAIN_ERROR,
   SET_ORDER_NUMBER,
-  SET_SELECT_INGREDIENT,
   DELETE_INGREDIENT_FROM_INGREDIENTS,
   REPLACE_INNER_DRAG_INGREDIENT,
   SET_ADDED_INGREDIENT
@@ -31,9 +30,6 @@ export const appReducer = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
-    }
-    case SET_SELECT_INGREDIENT: {
-      return { ...state, selectedIngredient: action.ingredient };
     }
     case SET_ADDED_INGREDIENT: {
       const newState =

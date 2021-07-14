@@ -47,102 +47,99 @@ const PersonalAreaForm = () => {
   useEffect(() => {
     dispatch(getUserData());
     return () => {
-      dispatch({ type: UNSET_ERROR })
-    }
+      dispatch({ type: UNSET_ERROR });
+    };
   }, [dispatch]);
 
   return (
-    <>
-      <form className={`${styles.flexColumnCenter}`}>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            icon={isNameEdit ? "CloseIcon" : "EditIcon"}
-            onIconClick={onIconClick("name")}
-            ref={NameRef}
-            onFocus={() => {
-              setNameEdit(true);
-              setChangeButtons(true);
+    <form
+      className={`${styles.flexColumnCenter}`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch(changeUserData(formEmail, formPassword, formName));
+      }}
+    >
+      <div className="mb-6">
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
+          icon={isNameEdit ? "CloseIcon" : "EditIcon"}
+          onIconClick={onIconClick("name")}
+          ref={NameRef}
+          onFocus={() => {
+            setNameEdit(true);
+            setChangeButtons(true);
+          }}
+          onBlur={() => setNameEdit(false)}
+          value={formName}
+          onChange={(e) =>
+            dispatch({
+              type: SET_FORM_NAME,
+              formName: e.target.value,
+            })
+          }
+        />
+      </div>
+      <div className="mb-6">
+        <Input
+          type={"text"}
+          placeholder={"Логин"}
+          icon={isLoginEdit ? "CloseIcon" : "EditIcon"}
+          onIconClick={onIconClick("login")}
+          ref={LoginRef}
+          onFocus={() => {
+            setLoginEdit(true);
+            setChangeButtons(true);
+          }}
+          onBlur={() => setLoginEdit(false)}
+          value={formEmail}
+          onChange={(e) =>
+            dispatch({
+              type: SET_FORM_EMAIL,
+              formEmail: e.target.value,
+            })
+          }
+        />
+      </div>
+      <div className="mb-6">
+        <Input
+          type={isPasswordEdit ? "text" : "password"}
+          placeholder={"Пароль"}
+          icon={isPasswordEdit ? "CloseIcon" : "EditIcon"}
+          onIconClick={onIconClick("password")}
+          ref={PassRef}
+          onFocus={() => {
+            setPasswordEdit(true);
+            setChangeButtons(true);
+          }}
+          onBlur={() => setPasswordEdit(false)}
+          value={formPassword}
+          onChange={(e) =>
+            dispatch({
+              type: SET_FORM_PASSWORD,
+              formPassword: e.target.value,
+            })
+          }
+        />
+      </div>
+      {changeButtons && (
+        <div>
+          <Button
+            type="secondary"
+            size="medium"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(getUserData());
             }}
-            onBlur={() => setNameEdit(false)}
-            value={formName}
-            onChange={(e) =>
-              dispatch({
-                type: SET_FORM_NAME,
-                formName: e.target.value,
-              })
-            }
-          />
+          >
+            Отмена
+          </Button>
+          <Button type="primary" size="medium">
+            Сохранить
+          </Button>
         </div>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Логин"}
-            icon={isLoginEdit ? "CloseIcon" : "EditIcon"}
-            onIconClick={onIconClick("login")}
-            ref={LoginRef}
-            onFocus={() => {
-              setLoginEdit(true);
-              setChangeButtons(true);
-            }}
-            onBlur={() => setLoginEdit(false)}
-            value={formEmail}
-            onChange={(e) =>
-              dispatch({
-                type: SET_FORM_EMAIL,
-                formEmail: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className="mb-6">
-          <Input
-            type={isPasswordEdit ? "text" : "password"}
-            placeholder={"Пароль"}
-            icon={isPasswordEdit ? "CloseIcon" : "EditIcon"}
-            onIconClick={onIconClick("password")}
-            ref={PassRef}
-            onFocus={() => {
-              setPasswordEdit(true);
-              setChangeButtons(true);
-            }}
-            onBlur={() => setPasswordEdit(false)}
-            value={formPassword}
-            onChange={(e) =>
-              dispatch({
-                type: SET_FORM_PASSWORD,
-                formPassword: e.target.value,
-              })
-            }
-          />
-        </div>
-        {changeButtons && (
-          <div>
-            <Button
-              type="secondary"
-              size="medium"
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(getUserData());
-              }}
-            >
-              Отмена
-            </Button>
-            <Button
-              type="primary"
-              size="medium"
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(changeUserData(formEmail, formPassword, formName));
-              }}
-            >
-              Сохранить
-            </Button>
-          </div>
-        )}
-      </form>
-    </>
+      )}
+    </form>
   );
 };
 

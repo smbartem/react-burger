@@ -1,4 +1,4 @@
-import AppHeader from "../components/app-header/app-header";
+import AppHeader from "../../components/app-header/app-header";
 import { Link } from "react-router-dom";
 
 export const NotFoundPage = () => (

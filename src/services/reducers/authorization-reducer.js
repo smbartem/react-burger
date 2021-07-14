@@ -13,7 +13,9 @@ import {
   UNSET_ERROR,
   SET_ERROR,
   SET_REDIRECT_TO_LOGIN_FOR_ORDER,
-  UNSET_REDIRECT_TO_LOGIN_FOR_ORDER
+  UNSET_REDIRECT_TO_LOGIN_FOR_ORDER,
+  SET_REDIRECT_TO_ORDER_DETAILS,
+  UNSET_REDIRECT_TO_ORDER_DETAILS,
 } from "../../services/actions/authorization-actions";
 
 const initialState = {
@@ -27,6 +29,7 @@ const initialState = {
   redirectToLoginForOrder: false,
   formConfirmationCode: '',
   authorized: false,
+  redirectToOrderDetails: false,
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -106,6 +109,18 @@ export const authorizationReducer = (state = initialState, action) => {
       return {
         ...state,
         redirectToLoginForOrder: false
+      }
+    }
+    case SET_REDIRECT_TO_ORDER_DETAILS: {
+      return {
+        ...state,
+        redirectToOrderDetails: true
+      }
+    }
+    case UNSET_REDIRECT_TO_ORDER_DETAILS: {
+      return {
+        ...state,
+        redirectToOrderDetails: false
       }
     }
     case SET_CONFIRMATION_CODE: {

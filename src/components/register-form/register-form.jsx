@@ -1,25 +1,27 @@
+import { useEffect } from "react";
 import {
   EmailInput,
   PasswordInput,
   Button,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  SET_FORM_NAME,
   SET_FORM_EMAIL,
   SET_FORM_PASSWORD,
   UNSET_ERROR,
-  makeLogin
+  register,
 } from "../../services/actions/authorization-actions";
-import styles from "./authentication-form.module.css";
-import { useEffect } from "react";
+import styles from "./register-form.module.css";
 
-const LoginForm = () => {
-  const { formEmail, formPassword, error, redirectToMain } = useSelector(
+const RegisterForm = () => {
+  const { formName, formEmail, formPassword, error, redirectToMain } = useSelector(
     (store) => store.authorizationReducer
   );
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     return () => {
       dispatch({ type: UNSET_ERROR })
@@ -28,9 +30,22 @@ const LoginForm = () => {
 
   return (
     <>
-      <h2 className="mt-20 mb-6 text text_type_main-medium">Вход</h2>
+      <h2 className="mt-20 mb-6 text text_type_main-medium">Регистрация</h2>
       {error && <h2 className="mb-6 text text_type_main-medium" style={{textAlign: "center"}}>{error}</h2>}
       <form className={`${styles.flexColumnCenter} mb-20`}>
+        <div className="mb-6">
+          <Input
+            type={"text"}
+            placeholder={"Имя"}
+            value={formName}
+            onChange={(e) =>
+              dispatch({
+                type: SET_FORM_NAME,
+                formName: e.target.value,
+              })
+            }
+          />
+        </div>
         <div className="mb-6">
           <EmailInput
             name={"email"}
@@ -55,31 +70,25 @@ const LoginForm = () => {
             }
           />
         </div>
-        <Button type="primary" size="medium" onClick={(e) => {
-          e.preventDefault();
-          dispatch(makeLogin(formEmail, formPassword));
-        }}>
-          Войти
+        <Button
+          type="primary"
+          size="medium"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(register(formEmail, formPassword, formName));
+          }}
+        >
+          Зарегистрироваться
         </Button>
       </form>
       <div>
         <div className={styles.displayFlex}>
           <p className={`${styles.text} text text_type_main-default`}>
-            Вы — новый пользователь?
+            Уже зарегистрированы?
           </p>
-          <Link to="/register">
+          <Link to="/login">
             <p className={`${styles.link} text text_type_main-default`}>
-              Зарегистрироваться
-            </p>
-          </Link>
-        </div>
-        <div className={styles.displayFlex}>
-          <p className={`${styles.text} text text_type_main-default`}>
-            Забыли пароль?
-          </p>
-          <Link to="/forgot-password">
-            <p className={`${styles.link} text text_type_main-default`}>
-              Восстановить пароль
+              Войти
             </p>
           </Link>
         </div>
@@ -89,4 +98,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

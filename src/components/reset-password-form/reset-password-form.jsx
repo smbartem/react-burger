@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import styles from "./authentication-form.module.css";
+import styles from "./reset-password-form.module.css";
 import {
   SET_FORM_PASSWORD,
   SET_CONFIRMATION_CODE,

@@ -10,14 +10,26 @@ import {
   ProfilePage,
   OrdersHistoryPage,
   BurgerIngredientPage,
+  BurgerIngredientModal,
+  OrderDetailsModal,
 } from "../../pages";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUserData } from "../../services/actions/authorization-actions";
 
 function ModalSwitch() {
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   let background =
-    history.action === "PUSH" && location.state && location.state.background;
+    (history.action === "PUSH" || history.action === "REPLACE") &&
+    location.state &&
+    location.state.background;
 
   return (
     <>
@@ -34,10 +46,10 @@ function ModalSwitch() {
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPasswordPage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path="/profile" exact={true} onlyUnAuth={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders" exact={true}>
+        <ProtectedRoute path="/profile/orders" exact={true} onlyUnAuth={true}>
           <OrdersHistoryPage />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
@@ -51,9 +63,14 @@ function ModalSwitch() {
         </Route>
       </Switch>
       {background && (
-        <Route path="/ingredients/:id" exact={true}>
-          <HomePage />
-        </Route>
+        <>
+          <Route path="/ingredients/:id" exact={true}>
+            <BurgerIngredientModal />
+          </Route>
+          <Route path="/order-details" exact={true}>
+            <OrderDetailsModal />
+          </Route>
+        </>
       )}
     </>
   );
