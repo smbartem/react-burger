@@ -1,11 +1,11 @@
 import * as _ from "lodash";
 import {
   SET_DATA,
-  SET_ERROR,
+  SET_MAIN_ERROR,
   SET_ORDER_NUMBER,
-  SET_SELECT_INGREDIENT,
   DELETE_INGREDIENT_FROM_INGREDIENTS,
-  REPLACE_INNER_DRAG_INGREDIENT
+  REPLACE_INNER_DRAG_INGREDIENT,
+  SET_ADDED_INGREDIENT
 } from "../../services/actions/app-actions";
 
 const initialState = {
@@ -25,13 +25,13 @@ export const appReducer = (state = initialState, action) => {
         data: action.data,
       };
     }
-    case SET_ERROR: {
+    case SET_MAIN_ERROR: {
       return {
         ...state,
         error: action.error,
       };
     }
-    case SET_SELECT_INGREDIENT: {
+    case SET_ADDED_INGREDIENT: {
       const newState =
         action.ingredient.type === "bun"
           ? { ...state, bun: action.ingredient }
@@ -45,7 +45,7 @@ export const appReducer = (state = initialState, action) => {
               },
             ],
           };
-      return { ...newState, selectedIngredient: action.ingredient };
+      return { ...newState };
     }
     case SET_ORDER_NUMBER: {
       return {

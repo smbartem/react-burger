@@ -6,13 +6,19 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrop } from "react-dnd";
+import { Redirect, useLocation } from "react-router-dom";
 import styles from "./burger-constructor.module.css";
 import { getOrder } from "../../services/actions/app-actions";
-import { SET_SELECT_INGREDIENT } from "../../services/actions/app-actions";
+import { SET_ADDED_INGREDIENT } from "../../services/actions/app-actions";
 import BurgerConstructorInnerIngredients from "./burger-constructor-ingredients";
 
 const BurgerConstructor = () => {
+  let location = useLocation();
+
   const { bun, ingredients } = useSelector((store) => store.appReducer);
+  const { redirectToLoginForOrder, redirectToOrderDetails } = useSelector(
+    (store) => store.authorizationReducer
+  );
   const dispatch = useDispatch();
 
   const bunTotalPrice = bun ? bun.price * 2 : 0;
@@ -25,7 +31,7 @@ const BurgerConstructor = () => {
   const [{ isDragContainer }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(element) {
-      dispatch({ type: SET_SELECT_INGREDIENT, ingredient: element });
+      dispatch({ type: SET_ADDED_INGREDIENT, ingredient: element });
     },
     collect: (monitor) => ({
       isDragContainer: monitor.canDrop(),
@@ -57,7 +63,11 @@ const BurgerConstructor = () => {
         {
           <div className={`pr-2 ${styles.scrollbar}`}>
             {ingredients.map((el, index) => (
-              <BurgerConstructorInnerIngredients el={el} index={index} key={el.key}/>
+              <BurgerConstructorInnerIngredients
+                el={el}
+                index={index}
+                key={el.key}
+              />
             ))}
           </div>
         }
@@ -81,13 +91,22 @@ const BurgerConstructor = () => {
         <Button
           type="primary"
           size="large"
-          onClick={() =>
-            bun && ingredients && dispatch(getOrder(ingredients, bun))
-          }
+          onClick={async () => {
+            bun && ingredients && dispatch(getOrder(ingredients, bun));
+          }}
         >
           Оформить заказ
         </Button>
       </div>
+      {redirectToLoginForOrder && <Redirect to="/login" />}
+      {redirectToOrderDetails && (
+        <Redirect
+          to={{
+            pathname: "/order-details",
+            state: { background: location },
+          }}
+        />
+      )}
     </section>
   );
 };

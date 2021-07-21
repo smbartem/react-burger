@@ -1,10 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";
 
-const IngredientDetails = () => {
-  const { selectedIngredient } = useSelector((store) => store.appReducer);
-
+const IngredientDetails = ({ selectedIngredient }) => {
+  
   return (
     <>
       <img
@@ -51,6 +50,20 @@ const IngredientDetails = () => {
       </div>
     </>
   );
+};
+
+IngredientDetails.propTypes = {
+  selectedIngredient: PropTypes.oneOfType([
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      calories: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+    }).isRequired,
+  ]),
 };
 
 export default IngredientDetails;
