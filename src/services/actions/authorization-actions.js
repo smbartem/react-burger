@@ -1,7 +1,7 @@
 import { setCookie, getCookie, deleteCookie } from "../utils";
 const axios = require("axios");
 
-const cookieExpSec = 1200;
+const COOKIE_EXPIRE_SEC = 10;
 
 const registerUrl = "https://norma.nomoreparties.space/api/auth/register"; //- эндпоинт для регистрации пользователя.
 const authorizationUrl = "https://norma.nomoreparties.space/api/auth/login"; //- эндпоинт для авторизации.
@@ -44,7 +44,7 @@ export const refreshAccessToken = (dispatch) => {
     .then((data) => {
       const accessToken = data.data.accessToken.split("Bearer ")[1];
       const refreshToken = data.data.refreshToken;
-      setCookie("accessToken", accessToken, { expires: cookieExpSec });
+      setCookie("accessToken", accessToken, { expires: COOKIE_EXPIRE_SEC });
       setCookie("refreshToken", refreshToken);
     })
     .catch((error) => catchError(dispatch, error));
@@ -86,7 +86,7 @@ export const register = (email, password, name) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: cookieExpSec });
+        setCookie("accessToken", accessToken, { expires: COOKIE_EXPIRE_SEC });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({ type: UNSET_REDIRECT_TO_MAIN });
@@ -106,7 +106,7 @@ export const makeLogin = (email, password) => {
       .then((data) => {
         const accessToken = data.data.accessToken.split("Bearer ")[1];
         const refreshToken = data.data.refreshToken;
-        setCookie("accessToken", accessToken, { expires: cookieExpSec });
+        setCookie("accessToken", accessToken, { expires: COOKIE_EXPIRE_SEC });
         setCookie("refreshToken", refreshToken);
         dispatch({ type: SET_REDIRECT_TO_MAIN });
         dispatch({
@@ -165,8 +165,7 @@ export const setNewPassword = (password, token) => {
 
 export const getUserData = () => {
   return async function (dispatch) {
-    if (getCookie("refreshToken")) {
-
+    if (getCookie("accessToken")) {
       axios
         .get(userDataUrl, {
           headers: {
@@ -183,13 +182,18 @@ export const getUserData = () => {
           dispatch({ type: SET_LOGIN });
         })
         .catch((error) => {
-          if (error.response.data.message === "jwt malformed") {
+          if (error.response.data.message === "jwt expired") {
             refreshAccessToken(dispatch);
             getUserData();
           } else {
             catchError(dispatch, error);
           }
         });
+    } else {
+      if (getCookie("refreshToken")) {
+        refreshAccessToken(dispatch);
+        getUserData();
+      }
     }
   };
 };
@@ -220,7 +224,7 @@ export const changeUserData = (email, password, name) => {
         dispatch({ type: SET_LOGIN });
       })
       .catch((error) => {
-        if (error.response.data.message === "jwt malformed") {
+        if (error.response.data.message === "jwt expired") {
           refreshAccessToken(dispatch);
           getUserData();
         } else {

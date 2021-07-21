@@ -19,21 +19,21 @@ const PersonalAreaMenu = ({ description }) => {
         </h2>
       )}
       <ul className="mb-20">
-        <li>
+        <li className="mt-4 mb-4">
           <NavLink
             exact
             to="/profile"
-            className="mt-4 mb-4 text text_type_main-medium text_color_inactive"
+            className="text text_type_main-medium text_color_inactive"
             activeClassName={styles.colorActive}
           >
             Профиль
           </NavLink>
         </li>
-        <li>
+        <li className="mt-4 mb-4">
           <NavLink
             exact
             to="/profile/orders"
-            className="mt-4 mb-4 text text_type_main-medium text_color_inactive"
+            className="text text_type_main-medium text_color_inactive"
             activeClassName={styles.colorActive}
           >
             История заказов
