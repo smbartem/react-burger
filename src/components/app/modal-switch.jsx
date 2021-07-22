@@ -12,6 +12,7 @@ import {
   BurgerIngredientPage,
   BurgerIngredientModal,
   OrderDetailsModal,
+  OrderTapePage,
 } from "../../pages";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -52,6 +53,9 @@ function ModalSwitch() {
         <ProtectedRoute path="/profile/orders" exact={true} onlyUnAuth={true}>
           <OrdersHistoryPage />
         </ProtectedRoute>
+        <Route path="/feed" exact={true}>
+          <OrderTapePage />
+        </Route>
         <Route path="/ingredients/:id">
           <BurgerIngredientPage />
         </Route>

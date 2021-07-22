@@ -1,0 +1,36 @@
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.innerContainer {
+  display: flex;
+}
+
+.feedContainer {
+  width: 50%;
+  max-height: 700px;
+  overflow-y: auto;
+  margin-right: 56px;
+}
+
+.feedContainer::-webkit-scrollbar{
+  width: 8px;
+}
+
+.feedContainer::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.feedContainer::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+
+.infoContainer {
+  width: 50%;
+}
+
+.ordersBoard {
+  display: flex;
+}

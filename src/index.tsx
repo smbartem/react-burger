@@ -8,8 +8,9 @@ import { Provider } from "react-redux";
 import { rootReducer } from "./services/reducers/rootReducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import { orderTapeSocketMiddleware } from "./services/actions/order-tape-actions"
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, orderTapeSocketMiddleware())));
 
 ReactDOM.render(
   <Provider store={store}>

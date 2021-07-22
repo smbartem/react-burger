@@ -8,7 +8,8 @@ import { ProfilePage } from "./profile/profile";
 import { OrdersHistoryPage } from "./orders-history/orders-history";
 import { BurgerIngredientPage } from "../pages/burger-ingredient-page/burger-ingredient-page";
 import { BurgerIngredientModal } from "./burger-ingredient-modal/burger-ingredient-modal";
-import { OrderDetailsModal } from "./order-details-modal/order-details-modal"
+import { OrderDetailsModal } from "./order-details-modal/order-details-modal";
+import { OrderTapePage } from "./order-tape-page/order-tape-page";
 
 export {
   HomePage,
@@ -22,4 +23,5 @@ export {
   BurgerIngredientPage,
   BurgerIngredientModal,
   OrderDetailsModal,
+  OrderTapePage
 };
