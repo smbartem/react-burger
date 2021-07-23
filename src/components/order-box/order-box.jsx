@@ -9,9 +9,11 @@ const OrderBox = ({ element }) => {
   const [ingredients, setIngredients] = useState(null);
 
   useEffect(() => {
-    data &&
+    element.ingredients &&
       setIngredients(
-        data.filter((el) => element?.ingredients.includes(el._id))
+        element.ingredients.map(
+          (el) => data.filter((elem) => elem._id === el)[0]
+        )
       );
   }, [data, element]);
 
@@ -76,13 +78,7 @@ const OrderBox = ({ element }) => {
         </div>
         <div className={style.priceContainer}>
           <p className="text text_type_digits-default mr-2">
-            {ingredients?.reduce(
-              (acc, el) =>
-                el.type === "bun"
-                  ? (acc += Number(el.price) * 2)
-                  : (acc += Number(el.price)),
-              0
-            )}
+            {ingredients?.reduce((acc, el) => (acc += Number(el.price)), 0)}
           </p>
           <CurrencyIcon type="primary" />
         </div>

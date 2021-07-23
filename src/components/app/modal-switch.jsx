@@ -13,6 +13,8 @@ import {
   BurgerIngredientModal,
   OrderDetailsModal,
   OrderTapePage,
+  OrderIngredientModalPage,
+  OrderIngredientPage,
 } from "../../pages";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -56,7 +58,10 @@ function ModalSwitch() {
         <Route path="/feed" exact={true}>
           <OrderTapePage />
         </Route>
-        <Route path="/ingredients/:id">
+        <Route path="/feed/:id" exact={true}>
+          <OrderIngredientPage />
+        </Route>
+        <Route path="/ingredients/:id" exact={true}>
           <BurgerIngredientPage />
         </Route>
         <Route path="/" exact={true}>
@@ -73,6 +78,9 @@ function ModalSwitch() {
           </Route>
           <Route path="/order-details" exact={true}>
             <OrderDetailsModal />
+          </Route>
+          <Route path="/feed/:id">
+            <OrderIngredientModalPage exact={true}/>
           </Route>
         </>
       )}

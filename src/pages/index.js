@@ -10,6 +10,8 @@ import { BurgerIngredientPage } from "../pages/burger-ingredient-page/burger-ing
 import { BurgerIngredientModal } from "./burger-ingredient-modal/burger-ingredient-modal";
 import { OrderDetailsModal } from "./order-details-modal/order-details-modal";
 import { OrderTapePage } from "./order-tape-page/order-tape-page";
+import { OrderIngredientModalPage } from "./order-ingredient-modal-page/order-ingredient-modal-page";
+import { OrderIngredientPage } from "./order-ingredient-page/order-ingredient-page";
 
 export {
   HomePage,
@@ -23,5 +25,7 @@ export {
   BurgerIngredientPage,
   BurgerIngredientModal,
   OrderDetailsModal,
-  OrderTapePage
+  OrderTapePage,
+  OrderIngredientModalPage,
+  OrderIngredientPage
 };

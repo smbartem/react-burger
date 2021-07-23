@@ -1,12 +1,21 @@
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import AppHeader from "../../components/app-header/app-header";
 import style from "./order-tape-page.module.css";
 import OrderBox from "../../components/order-box/order-box";
+
+/*
+
+Пишет ошибку, Each child in a list should have a unique "key" prop.
+Я вроде везде передал "key" prop. Подскажите, пожалуйста, где ошибка
+
+*/
 
 export const OrderTapePage = () => {
   const { total, totalToday, orders, errorWSOrderTape } = useSelector(
     (store) => store.wsOrderTypeReducer
   );
+  let location = useLocation();
   return (
     <>
       <AppHeader />
@@ -18,7 +27,12 @@ export const OrderTapePage = () => {
           <div className={style.feedContainer}>
             {orders &&
               orders.map((el) => { return (
-                <OrderBox element={el} key={el._id} />
+                <Link to={{
+                  pathname: `feed/${el.number}`,
+                  state: { background: location },
+                }}>
+                  <OrderBox element={el} key={el._id} />
+                </Link>
               )})}
           </div>
           <div className={style.infoContainer}>
