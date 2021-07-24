@@ -1,4 +1,5 @@
 import { setCookie, getCookie, deleteCookie } from "../utils";
+import { WS_ORDER_HISTORY_CONNECTION_CLOSED } from "./order-history-actions";
 const axios = require("axios");
 
 const COOKIE_EXPIRE_SEC = 1200;
@@ -130,6 +131,7 @@ export const makeLogout = () => {
         deleteCookie("refreshToken");
         deleteCookie("accessToken");
         dispatch({ type: SET_LOGOUT });
+        dispatch({ type: WS_ORDER_HISTORY_CONNECTION_CLOSED })
       })
       .catch((error) => catchError(dispatch, error));
   };

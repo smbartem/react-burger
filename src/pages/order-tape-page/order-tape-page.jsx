@@ -1,19 +1,13 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import * as _ from "lodash"
 import AppHeader from "../../components/app-header/app-header";
 import style from "./order-tape-page.module.css";
 import OrderBox from "../../components/order-box/order-box";
 
-/*
-
-Пишет ошибку, Each child in a list should have a unique "key" prop.
-Я вроде везде передал "key" prop. Подскажите, пожалуйста, где ошибка
-
-*/
-
 export const OrderTapePage = () => {
   const { total, totalToday, orders, errorWSOrderTape } = useSelector(
-    (store) => store.wsOrderTypeReducer
+    (store) => store.wsOrderTapeReducer
   );
   let location = useLocation();
   return (
@@ -26,21 +20,26 @@ export const OrderTapePage = () => {
         <div className={style.innerContainer}>
           <div className={style.feedContainer}>
             {orders &&
-              orders.map((el) => { return (
-                <Link to={{
-                  pathname: `feed/${el.number}`,
-                  state: { background: location },
-                }}>
-                  <OrderBox element={el} key={el._id} />
-                </Link>
-              )})}
+              orders.map((el) => {
+                return (
+                  <Link
+                    to={{
+                      pathname: `feed/${el.number}`,
+                      state: { background: location },
+                    }}
+                    key={_.uniqueId()}
+                  >
+                    <OrderBox element={el} key={el._id} />
+                  </Link>
+                );
+              })}
           </div>
           <div className={style.infoContainer}>
             <div className={`${style.ordersBoard} mb-15`}>
               <div className="mr-8">
                 <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
                 <div>
-                {orders &&
+                  {orders &&
                     orders.map(
                       (el, index) =>
                         index < 10 &&

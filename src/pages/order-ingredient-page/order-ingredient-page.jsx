@@ -3,13 +3,17 @@ import { useParams } from "react-router-dom";
 import AppHeader from "../../components/app-header/app-header";
 import OrderIngredients from "../../components/order-ingredients/order-ingredients";
 
-export const OrderIngredientPage = () => {
+export const OrderIngredientPage = ({ profile }) => {
   const { id } = useParams();
-  const selectedOrder = useSelector(
-    (store) =>
-      store.wsOrderTypeReducer.orders &&
-      store.wsOrderTypeReducer.orders.filter((el) => +el.number === +id)[0]
-  );
+  const selectedOrder = useSelector((store) => {
+    return !profile
+      ? store.wsOrderTapeReducer.orders &&
+          store.wsOrderTapeReducer.orders.filter((el) => +el.number === +id)[0]
+      : store.wsOrderHistoryReducer.orders &&
+          store.wsOrderHistoryReducer.orders.filter(
+            (el) => +el.number === +id
+          )[0];
+  });
   const data = useSelector((store) => store.appReducer.data);
 
   const ingredients = selectedOrder?.ingredients

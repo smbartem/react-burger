@@ -13,7 +13,7 @@ const initialState = {
   errorWSOrderTape: null,
 };
 
-export const wsOrderTypeReducer = (state = initialState, action) => {
+export const wsOrderTapeReducer = (state = initialState, action) => {
   switch (action.type) {
     case WS_ORDER_TAPE_CONNECTION_SUCCESS: {
       return {

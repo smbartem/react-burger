@@ -1,0 +1,22 @@
+.container {
+  max-width: 1240px;
+  margin: 120px auto;
+  display: flex;
+}
+
+.scrollbar {
+  max-height: 800px;
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar{
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
