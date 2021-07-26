@@ -1,17 +1,28 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import * as _ from "lodash";
 import AppHeader from "../../components/app-header/app-header";
 import PersonalAreaMenu from "../../components/personal-area/personal-area-menu";
 import styles from "./order-history.module.css";
 import OrderBox from "../../components/order-box/order-box";
+import { useEffect } from "react";
+import {
+  WS_ORDER_HISTORY_CONNECTION_INIT,
+  WS_ORDER_HISTORY_CONNECTION_CLOSED,
+} from "../../services/actions/order-history-actions";
 
 export const OrdersHistoryPage = () => {
+  const dispatch = useDispatch();
   const { errorWSOrderHistory, orders } = useSelector(
     (store) => store.wsOrderHistoryReducer
   );
 
   let location = useLocation();
+
+  useEffect(() => {
+    dispatch({ type: WS_ORDER_HISTORY_CONNECTION_INIT });
+    return () => dispatch({ type: WS_ORDER_HISTORY_CONNECTION_CLOSED });
+  }, [dispatch]);
 
   return (
     <>

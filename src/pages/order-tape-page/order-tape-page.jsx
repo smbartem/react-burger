@@ -1,15 +1,27 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import * as _ from "lodash"
+import * as _ from "lodash";
+import {
+  WS_ORDER_TAPE_CONNECTION_INIT,
+  WS_ORDER_TAPE_CONNECTION_CLOSED,
+} from "../../services/actions/order-tape-actions";
 import AppHeader from "../../components/app-header/app-header";
 import style from "./order-tape-page.module.css";
 import OrderBox from "../../components/order-box/order-box";
+import { useEffect } from "react";
 
 export const OrderTapePage = () => {
+  const dispatch = useDispatch();
   const { total, totalToday, orders, errorWSOrderTape } = useSelector(
     (store) => store.wsOrderTapeReducer
   );
   let location = useLocation();
+
+  useEffect(() => {
+    dispatch({ type: WS_ORDER_TAPE_CONNECTION_INIT });
+    return () => dispatch({ type: WS_ORDER_TAPE_CONNECTION_CLOSED });
+  }, [dispatch]);
+
   return (
     <>
       <AppHeader />

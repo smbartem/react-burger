@@ -53,7 +53,7 @@ function ModalSwitch() {
           <ProfilePage />
         </ProtectedRoute>
         <Route path="/profile/orders/:id" exact={true}>
-          <OrderIngredientPage profile={true} />
+          <OrderIngredientPage />
         </Route>
         <ProtectedRoute path="/profile/orders" exact={true} onlyUnAuth={true}>
           <OrdersHistoryPage />
@@ -76,14 +76,8 @@ function ModalSwitch() {
       </Switch>
       {background && (
         <>
-          {
-            /*
-              Некорректно работает path="/profile/orders/:id". Открывается модальное окно, но пропадает страница подложка, 
-              хотя path="/feed/:id" с тем же внутренним компонентом работает корректно. Подскажите, пожалуйста, где ошибка
-            
-            */
-          }
           <Route path="/profile/orders/:id" exact={true}>
+            <OrdersHistoryPage />
             <OrderIngredientModalPage profile={true} />
           </Route>
           <Route path="/ingredients/:id" exact={true}>

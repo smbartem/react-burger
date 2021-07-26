@@ -23,12 +23,13 @@ const OrderIngredients = ({
         : `${inputDate.getDate()}-${
             inputDate.getMonth() + 1
           }-${inputDate.getFullYear()}`;
-    const outputTime = `${inputDate.getUTCHours()}:${
-      inputDate.getUTCMinutes() < 10
-        ? `0${inputDate.getUTCMinutes()}`
-        : inputDate.getUTCMinutes()
+    const outputTime = `${inputDate.getHours()}:${
+      inputDate.getMinutes() < 10
+        ? `0${inputDate.getMinutes()}`
+        : inputDate.getMinutes()
     }`;
-    return `${outputDate}, ${outputTime} i-GMT+3`;
+    const GMT = (dateNow.getHours() - dateNow.getUTCHours())
+    return `${outputDate}, ${outputTime} i-GMT${GMT > 0 ? `+${GMT}` : GMT}`;
   }, [order?.createdAt]);
 
   const justifyContentCenter = !isModal ? { justifyContent: "center" } : null;

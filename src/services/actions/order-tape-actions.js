@@ -18,6 +18,11 @@ export const orderTapeSocketMiddleware = () => {
       if (type === WS_ORDER_TAPE_CONNECTION_INIT) {
         socket = new WebSocket(url);
       }
+
+      if (type === WS_ORDER_TAPE_CONNECTION_CLOSED) {
+        socket.close();
+      }
+
       if (socket) {
         socket.onopen = (event) => {
           dispatch({ type: WS_ORDER_TAPE_CONNECTION_SUCCESS, payload: event });
