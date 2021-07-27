@@ -1,7 +1,8 @@
 import { setCookie, getCookie, deleteCookie } from "../utils";
+import { WS_ORDER_HISTORY_CONNECTION_CLOSED } from "./order-history-actions";
 const axios = require("axios");
 
-const COOKIE_EXPIRE_SEC = 10;
+const COOKIE_EXPIRE_SEC = 1200;
 
 const registerUrl = "https://norma.nomoreparties.space/api/auth/register"; //- эндпоинт для регистрации пользователя.
 const authorizationUrl = "https://norma.nomoreparties.space/api/auth/login"; //- эндпоинт для авторизации.
@@ -66,7 +67,7 @@ const setForm = (dispatch, name = "", email = "", password = "") => {
 };
 
 const catchError = (dispatch, error) => {
-  const errorDescription = error.response.data.message
+  const errorDescription = error.response?.data.message
     ? error.response.data.message
     : "Ошибка операции";
   dispatch({
@@ -130,6 +131,7 @@ export const makeLogout = () => {
         deleteCookie("refreshToken");
         deleteCookie("accessToken");
         dispatch({ type: SET_LOGOUT });
+        dispatch({ type: WS_ORDER_HISTORY_CONNECTION_CLOSED })
       })
       .catch((error) => catchError(dispatch, error));
   };
@@ -182,7 +184,7 @@ export const getUserData = () => {
           dispatch({ type: SET_LOGIN });
         })
         .catch((error) => {
-          if (error.response.data.message === "jwt expired") {
+          if (error.response?.data.message === "Token is invalid") {
             refreshAccessToken(dispatch);
             getUserData();
           } else {

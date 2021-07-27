@@ -12,6 +12,9 @@ import {
   BurgerIngredientPage,
   BurgerIngredientModal,
   OrderDetailsModal,
+  OrderTapePage,
+  OrderIngredientModalPage,
+  OrderIngredientPage,
 } from "../../pages";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -49,10 +52,19 @@ function ModalSwitch() {
         <ProtectedRoute path="/profile" exact={true} onlyUnAuth={true}>
           <ProfilePage />
         </ProtectedRoute>
+        <Route path="/profile/orders/:id" exact={true}>
+          <OrderIngredientPage profile={true} />
+        </Route>
         <ProtectedRoute path="/profile/orders" exact={true} onlyUnAuth={true}>
           <OrdersHistoryPage />
         </ProtectedRoute>
-        <Route path="/ingredients/:id">
+        <Route path="/feed" exact={true}>
+          <OrderTapePage />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderIngredientPage />
+        </Route>
+        <Route path="/ingredients/:id" exact={true}>
           <BurgerIngredientPage />
         </Route>
         <Route path="/" exact={true}>
@@ -64,11 +76,27 @@ function ModalSwitch() {
       </Switch>
       {background && (
         <>
+        {
+          /*
+            Не знаю каким другим способом показать OrdersHistoryPage, при открытии модального окна
+          */
+        }
+          <ProtectedRoute
+            path="/profile/orders/:id"
+            exact={true}
+            onlyUnAuth={true}
+          >
+            <OrdersHistoryPage />
+            <OrderIngredientModalPage profile={true} />
+          </ProtectedRoute>
           <Route path="/ingredients/:id" exact={true}>
             <BurgerIngredientModal />
           </Route>
           <Route path="/order-details" exact={true}>
             <OrderDetailsModal />
+          </Route>
+          <Route path="/feed/:id" exact={true}>
+            <OrderIngredientModalPage />
           </Route>
         </>
       )}
