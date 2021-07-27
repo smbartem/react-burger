@@ -53,7 +53,7 @@ function ModalSwitch() {
           <ProfilePage />
         </ProtectedRoute>
         <Route path="/profile/orders/:id" exact={true}>
-          <OrderIngredientPage />
+          <OrderIngredientPage profile={true} />
         </Route>
         <ProtectedRoute path="/profile/orders" exact={true} onlyUnAuth={true}>
           <OrdersHistoryPage />
@@ -76,10 +76,19 @@ function ModalSwitch() {
       </Switch>
       {background && (
         <>
-          <Route path="/profile/orders/:id" exact={true}>
+        {
+          /*
+            Не знаю каким другим способом показать OrdersHistoryPage, при открытии модального окна
+          */
+        }
+          <ProtectedRoute
+            path="/profile/orders/:id"
+            exact={true}
+            onlyUnAuth={true}
+          >
             <OrdersHistoryPage />
             <OrderIngredientModalPage profile={true} />
-          </Route>
+          </ProtectedRoute>
           <Route path="/ingredients/:id" exact={true}>
             <BurgerIngredientModal />
           </Route>

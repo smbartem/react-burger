@@ -1,20 +1,20 @@
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import AppHeader from "../../components/app-header/app-header";
 import OrderIngredients from "../../components/order-ingredients/order-ingredients";
 
-export const OrderIngredientPage = () => {
-  const [selectedOrder, setSelectedOrder] = useState(null);
+export const OrderIngredientPage = ({ profile }) => {
   const { id } = useParams();
 
-  const url = useMemo(() => `https://norma.nomoreparties.space/api/orders/${id}`, [id]);
-
-  useEffect(() => {
-    axios.get(url)
-    .then(data => setSelectedOrder(data.data.orders[0]))
-  }, [url])
+  const selectedOrder = useSelector((store) => {
+    return !profile
+      ? store.wsOrderTapeReducer.orders &&
+          store.wsOrderTapeReducer.orders.filter((el) => +el.number === +id)[0]
+      : store.wsOrderHistoryReducer.orders &&
+          store.wsOrderHistoryReducer.orders.filter(
+            (el) => +el.number === +id
+          )[0];
+  });
 
   const data = useSelector((store) => store.appReducer.data);
 

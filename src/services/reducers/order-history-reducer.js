@@ -29,7 +29,7 @@ export const wsOrderHistoryReducer = (state = initialState, action) => {
     case WS_ORDER_HISTORY_CONNECTION_ERROR: {
       return {
         ...state,
-        errorWSOrderTape:
+        errorWSOrderHistory:
           "Ошибка соединения. Попробуйте перезагрузить страницу, отключить блокировщик рекламы и перелогиниться",
         wsOrderTapeConnected: false,
       };

@@ -184,7 +184,7 @@ export const getUserData = () => {
           dispatch({ type: SET_LOGIN });
         })
         .catch((error) => {
-          if (error.response?.data.message === "jwt expired") {
+          if (error.response?.data.message === "Token is invalid") {
             refreshAccessToken(dispatch);
             getUserData();
           } else {
