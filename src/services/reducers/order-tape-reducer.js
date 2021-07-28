@@ -5,7 +5,7 @@ import {
   WS_ORDER_TAPE_CONNECTION_CLOSED,
 } from "../actions/order-tape-actions";
 
-const initialState = {
+export const initialState = {
   wsOrderTapeConnected: false,
   total: null,
   totalToday: null,

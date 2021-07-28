@@ -1,6 +1,6 @@
 import { SET_CURRENT_BURGER_INGREDIENTS_NAME } from "../actions/interface-actions";
 
-const initialState = {
+export const initialState = {
   currentBurgerIngredientsName: "Булки",
 };
 

@@ -8,7 +8,7 @@ import {
   SET_ADDED_INGREDIENT
 } from "../../services/actions/app-actions";
 
-const initialState = {
+export const initialState = {
   data: null,
   error: null,
   bun: null,
