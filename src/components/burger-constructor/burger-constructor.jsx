@@ -48,9 +48,10 @@ const BurgerConstructor = () => {
         className={`mt-25 mb-10 ml-4 ${styles.burgerConstructorIngredientPlace}`}
         ref={dropTarget}
         style={burgerConstructorIngredientPlaceStyle}
+        data-test="dropTarget"
       >
         {bun && (
-          <div className="ml-8 mb-4">
+          <div className="ml-8 mb-4" data-test="bunUpContainer">
             <ConstructorElement
               type="top"
               isLocked
@@ -61,7 +62,7 @@ const BurgerConstructor = () => {
           </div>
         )}
         {
-          <div className={`pr-2 ${styles.scrollbar}`}>
+          <div className={`pr-2 ${styles.scrollbar}`} data-test="ingredientsScrollbarContainer">
             {ingredients.map((el, index) => (
               <BurgerConstructorInnerIngredients
                 el={el}
@@ -72,7 +73,7 @@ const BurgerConstructor = () => {
           </div>
         }
         {bun && (
-          <div className="ml-8">
+          <div className="ml-8" data-test="bunDownContainer">
             <ConstructorElement
               type="bottom"
               isLocked

@@ -18,7 +18,7 @@ import {
   UNSET_REDIRECT_TO_ORDER_DETAILS,
 } from "../../services/actions/authorization-actions";
 
-const initialState = {
+export const initialState = {
   error: null,
   formName: '',
   formEmail: '',

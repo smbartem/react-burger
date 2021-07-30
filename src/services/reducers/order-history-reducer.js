@@ -5,7 +5,7 @@ import {
   WS_ORDER_HISTORY_CONNECTION_CLOSED,
 } from "../actions/order-history-actions";
 
-const initialState = {
+export const initialState = {
   wsOrderHistoryConnected: false,
   orders: null,
   errorWSOrderHistory: null,
