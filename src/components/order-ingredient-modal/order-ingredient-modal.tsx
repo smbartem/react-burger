@@ -1,13 +1,14 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, FC } from "react";
+import { TOrderIngredientsModal } from "../../services/types";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import style from "./order-ingredient-modal.module.css";
 import OrderIngredients from "../order-ingredients/order-ingredients";
 
-const OrderIngredientModal = ({ order, handleModalClose, ingredients }) => {
+const OrderIngredientModal: FC<TOrderIngredientsModal> = ({ order, handleModalClose, ingredients }) => {
   const closeModalWindowByEsc = useCallback(
     (e) => {
       if (e.key === 'Escape') {
-        handleModalClose();
+        handleModalClose && handleModalClose();
       }
     },
     [handleModalClose]

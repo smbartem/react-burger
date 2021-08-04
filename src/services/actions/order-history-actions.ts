@@ -1,23 +1,53 @@
+import { AnyAction, MiddlewareAPI } from "redux";
 import { getCookie } from "../utils";
 import { refreshAccessToken } from "./authorization-actions";
-
+import { TOrderData } from "../types";
 const url = "wss://norma.nomoreparties.space/orders";
 
-export const WS_ORDER_HISTORY_CONNECTION_INIT =
+export const WS_ORDER_HISTORY_CONNECTION_INIT: "WS_ORDER_HISTORY_CONNECTION_INIT" =
   "WS_ORDER_HISTORY_CONNECTION_INIT";
-export const WS_ORDER_HISTORY_CONNECTION_SUCCESS =
+export const WS_ORDER_HISTORY_CONNECTION_SUCCESS: "WS_ORDER_HISTORY_CONNECTION_SUCCESS" =
   "WS_ORDER_HISTORY_CONNECTION_SUCCESS";
-export const WS_ORDER_HISTORY_CONNECTION_ERROR =
+export const WS_ORDER_HISTORY_CONNECTION_ERROR: "WS_ORDER_HISTORY_CONNECTION_ERROR" =
   "WS_ORDER_HISTORY_CONNECTION_ERROR";
-export const WS_ORDER_HISTORY_CONNECTION_CLOSED =
+export const WS_ORDER_HISTORY_CONNECTION_CLOSED: "WS_ORDER_HISTORY_CONNECTION_CLOSED" =
   "WS_ORDER_HISTORY_CONNECTION_CLOSED";
-export const WS_ORDER_HISTORY_GET_MESSAGE = "WS_ORDER_HISTORY_GET_MESSAGE";
+export const WS_ORDER_HISTORY_GET_MESSAGE: "WS_ORDER_HISTORY_GET_MESSAGE" =
+  "WS_ORDER_HISTORY_GET_MESSAGE";
+
+export interface IOrderHistoryConnectionInitAction {
+  readonly type: typeof WS_ORDER_HISTORY_CONNECTION_INIT;
+}
+
+export interface IOrderHistoryConnectionSuccessAction {
+  readonly type: typeof WS_ORDER_HISTORY_CONNECTION_SUCCESS;
+}
+
+export interface IOrderHistoryConnectionErrorAction {
+  readonly type: typeof WS_ORDER_HISTORY_CONNECTION_ERROR;
+}
+
+export interface IOrderHistoryConnectionClosedAction {
+  readonly type: typeof WS_ORDER_HISTORY_CONNECTION_CLOSED;
+}
+
+export interface IOrderHistoryConnectionGetMessageAction {
+  readonly type: typeof WS_ORDER_HISTORY_GET_MESSAGE;
+  payload: Array<TOrderData>;
+}
+
+export type TOrderHistoryActions =
+  | IOrderHistoryConnectionInitAction
+  | IOrderHistoryConnectionSuccessAction
+  | IOrderHistoryConnectionErrorAction
+  | IOrderHistoryConnectionClosedAction
+  | IOrderHistoryConnectionGetMessageAction;
 
 export const orderHistorySocketMiddleware = () => {
-  return (store) => {
-    let socket = null;
+  return (store: MiddlewareAPI) => {
+    let socket: WebSocket | null = null;
 
-    return (next) => (action) => {
+    return (next: (i: AnyAction) => void) => (action: AnyAction) => {
       const { dispatch } = store;
       const { type } = action;
       if (type === WS_ORDER_HISTORY_CONNECTION_INIT) {
@@ -25,7 +55,7 @@ export const orderHistorySocketMiddleware = () => {
         socket = new WebSocket(`${url}?token=${accessToken}`);
       }
       if (type === WS_ORDER_HISTORY_CONNECTION_CLOSED) {
-        socket.close();
+        socket?.close();
       }
       if (socket) {
         socket.onopen = (event) => {
@@ -42,7 +72,7 @@ export const orderHistorySocketMiddleware = () => {
             restParsedData.message &&
             restParsedData.message === "jwt expired"
           ) {
-            refreshAccessToken().then(() =>
+            refreshAccessToken(dispatch).then(() =>
               dispatch({ type: WS_ORDER_HISTORY_CONNECTION_INIT })
             );
           } else {

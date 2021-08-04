@@ -1,20 +1,20 @@
-import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { Link, useLocation } from "react-router-dom";
 import Ingredient from "./ingredient";
 import styles from "./burger-ingredients.module.css";
 import { SET_CURRENT_BURGER_INGREDIENTS_NAME } from "../../services/actions/interface-actions";
+import { TData } from "../../services/types";
 
 const BurgerIngredients = () => {
   let location = useLocation();
   const { data, bun, ingredients } = useSelector((store) => store.appReducer);
-  const currentBurgerIngredientsName = useSelector(
-    (store) => store.interfaceReducer.currentBurgerIngredientsName
+  const { currentBurgerIngredientsName } = useSelector(
+    (store) => store.interfaceReducer
   );
   const dispatch = useDispatch();
 
-  const handleScroll = (e) => {
+  const handleScroll = (e: any) => {
     if (e.target.scrollTop < 140) {
       dispatch({
         type: SET_CURRENT_BURGER_INGREDIENTS_NAME,
@@ -86,7 +86,7 @@ const BurgerIngredients = () => {
             Булки
           </h2>
           <div className={`mr-4 ml-4 ${styles.burgerIngredientsContainer}`}>
-            {data.map((el) => {
+            {[...data].map((el) => {
               if (el.type !== "bun") {
                 return null;
               }
@@ -115,11 +115,11 @@ const BurgerIngredients = () => {
           <div
             className={`mt-6 mb-10 mr-4 ml-4 ${styles.burgerIngredientsContainer}`}
           >
-            {data.map((el) => {
+            {[...data].map((el) => {
               if (el.type !== "sauce") {
                 return null;
               }
-              let counter = ingredients.filter(
+              let counter: number | null = [...ingredients].filter(
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;
@@ -145,11 +145,11 @@ const BurgerIngredients = () => {
           <div
             className={`mt-6 mb-10 mr-4 ml-4 ${styles.burgerIngredientsContainer}`}
           >
-            {data.map((el) => {
+            {[...data].map((el) => {
               if (el.type !== "main") {
                 return null;
               }
-              let counter = ingredients.filter(
+              let counter: number | null = [...ingredients].filter(
                 (element) => el._id === element._id
               ).length;
               counter = counter === 0 ? null : counter;

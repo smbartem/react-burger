@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef,  } from "react";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { Link, Redirect } from "react-router-dom";
 import styles from "./reset-password-form.module.css";
 import {
@@ -18,9 +18,9 @@ const ResetPasswordForm = () => {
   const { formPassword, formConfirmationCode, error, redirectToLogin } =
     useSelector((store) => store.authorizationReducer);
   const [isPasswordShow, setPasswordShow] = useState(false);
-  const inputRef = React.useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const onIconClick = () => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
     setPasswordShow(!isPasswordShow);
   };
 
@@ -76,8 +76,7 @@ const ResetPasswordForm = () => {
         <Button
           type="primary"
           size="medium"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             dispatch(setNewPassword(formPassword, formConfirmationCode));
           }}
         >

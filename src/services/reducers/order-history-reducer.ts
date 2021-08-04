@@ -1,3 +1,5 @@
+import { TOrderHistoryActions } from "../actions/order-history-actions";
+import { TOrderHistoryReducerInitialState } from "../types";
 import {
   WS_ORDER_HISTORY_CONNECTION_SUCCESS,
   WS_ORDER_HISTORY_GET_MESSAGE,
@@ -5,13 +7,16 @@ import {
   WS_ORDER_HISTORY_CONNECTION_CLOSED,
 } from "../actions/order-history-actions";
 
-export const initialState = {
+export const initialState: TOrderHistoryReducerInitialState = {
   wsOrderHistoryConnected: false,
   orders: null,
   errorWSOrderHistory: null,
 };
 
-export const wsOrderHistoryReducer = (state = initialState, action) => {
+export const wsOrderHistoryReducer = (
+  state = initialState,
+  action: TOrderHistoryActions
+) => {
   switch (action.type) {
     case WS_ORDER_HISTORY_CONNECTION_SUCCESS: {
       return {
@@ -23,7 +28,7 @@ export const wsOrderHistoryReducer = (state = initialState, action) => {
     case WS_ORDER_HISTORY_GET_MESSAGE: {
       return {
         ...state,
-        orders: action.payload
+        orders: action.payload,
       };
     }
     case WS_ORDER_HISTORY_CONNECTION_ERROR: {

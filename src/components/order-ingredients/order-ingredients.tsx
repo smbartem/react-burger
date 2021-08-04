@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   CloseIcon,
   CurrencyIcon,
@@ -6,8 +7,9 @@ import { useCallback } from "react";
 import * as _ from "lodash";
 import styles from "./order-ingredients.module.css";
 import OrderIngredientInfo from "./order-ingredients-info";
+import { TOrderIngredients } from "../../services/types";
 
-const OrderIngredients = ({
+const OrderIngredients: FC<TOrderIngredients> = ({
   order,
   handleModalClose,
   isModal,
@@ -32,7 +34,7 @@ const OrderIngredients = ({
     return `${outputDate}, ${outputTime} i-GMT${GMT > 0 ? `+${GMT}` : GMT}`;
   }, [order?.createdAt]);
 
-  const justifyContentCenter = !isModal ? { justifyContent: "center" } : null;
+  const justifyContentCenter = !isModal ? { justifyContent: "center" } : { justifyContent: "spaceBetween" };
 
   return (
     <div className={styles.container}>

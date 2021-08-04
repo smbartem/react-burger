@@ -1,3 +1,5 @@
+import { TAuthorizationActions } from "../actions/authorization-actions";
+import { TAuthorizationReducerInitialState } from "../types";
 import {
   SET_FORM_NAME,
   SET_FORM_EMAIL,
@@ -16,23 +18,26 @@ import {
   UNSET_REDIRECT_TO_LOGIN_FOR_ORDER,
   SET_REDIRECT_TO_ORDER_DETAILS,
   UNSET_REDIRECT_TO_ORDER_DETAILS,
-} from "../../services/actions/authorization-actions";
+} from "../actions/authorization-actions";
 
-export const initialState = {
+export const initialState: TAuthorizationReducerInitialState = {
   error: null,
-  formName: '',
-  formEmail: '',
-  formPassword: '',
+  formName: "",
+  formEmail: "",
+  formPassword: "",
   redirectToMain: false,
   redirectToResetPassword: false,
   redirectToLogin: false,
   redirectToLoginForOrder: false,
-  formConfirmationCode: '',
+  formConfirmationCode: "",
   authorized: false,
   redirectToOrderDetails: false,
 };
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authorizationReducer = (
+  state = initialState,
+  action: TAuthorizationActions
+) => {
   switch (action.type) {
     case SET_FORM_NAME: {
       return {
@@ -55,85 +60,85 @@ export const authorizationReducer = (state = initialState, action) => {
     case SET_LOGIN: {
       return {
         ...state,
-        authorized: true
+        authorized: true,
       };
     }
     case SET_ERROR: {
       return {
         ...state,
         error: action.error,
-      }
+      };
     }
     case SET_REDIRECT_TO_MAIN: {
       return {
         ...state,
         redirectToMain: true,
-      }
+      };
     }
     case UNSET_REDIRECT_TO_MAIN: {
       return {
         ...state,
         redirectToMain: false,
-      }
+      };
     }
     case SET_LOGOUT: {
       return {
         ...initialState,
-      }
+      };
     }
     case SET_REDIRECT_TO_RESET_PASSWORD: {
       return {
         ...state,
         redirectToResetPassword: true,
-      }
+      };
     }
     case UNSET_REDIRECT_TO_RESET_PASSWORD: {
       return {
         ...state,
         redirectToResetPassword: false,
-      }
+      };
     }
     case SET_REDIRECT_TO_LOGIN: {
       return {
         ...state,
-        redirectToLogin: true
-      }
+        redirectToLogin: true,
+      };
     }
     case SET_REDIRECT_TO_LOGIN_FOR_ORDER: {
       return {
         ...state,
-        redirectToLoginForOrder: true
-      }
+        redirectToLoginForOrder: true,
+      };
     }
     case UNSET_REDIRECT_TO_LOGIN_FOR_ORDER: {
       return {
         ...state,
-        redirectToLoginForOrder: false
-      }
+        redirectToLoginForOrder: false,
+      };
     }
     case SET_REDIRECT_TO_ORDER_DETAILS: {
       return {
         ...state,
-        redirectToOrderDetails: true
-      }
+        redirectToOrderDetails: true,
+      };
     }
     case UNSET_REDIRECT_TO_ORDER_DETAILS: {
       return {
         ...state,
-        redirectToOrderDetails: false
-      }
+        redirectToOrderDetails: false,
+      };
     }
     case SET_CONFIRMATION_CODE: {
       return {
         ...state,
-        formConfirmationCode: action.formConfirmationCode
-      }
+        formConfirmationCode: action.formConfirmationCode,
+      };
     }
     case UNSET_ERROR: {
       return {
         ...state,
         error: null,
-      }
+      };
     }
     default: {
       return state;

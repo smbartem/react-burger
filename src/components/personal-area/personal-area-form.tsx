@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./personal-area-form.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import {
   getUserData,
   changeUserData,
@@ -24,21 +24,21 @@ const PersonalAreaForm = () => {
   const [isLoginEdit, setLoginEdit] = useState(false);
   const [isPasswordEdit, setPasswordEdit] = useState(false);
   const [changeButtons, setChangeButtons] = useState(false);
-  const NameRef = React.useRef(null);
-  const LoginRef = React.useRef(null);
-  const PassRef = React.useRef(null);
+  const NameRef = React.useRef<HTMLInputElement | null>(null);
+  const LoginRef = React.useRef<HTMLInputElement | null>(null);
+  const PassRef = React.useRef<HTMLInputElement | null>(null);
 
-  const onIconClick = (param) => () => {
+  const onIconClick = (param: string) => () => {
     if (param === "name") {
-      !isNameEdit && NameRef.current.focus();
+      !isNameEdit && NameRef.current?.focus();
       setNameEdit(!isNameEdit);
     }
     if (param === "login") {
-      !isLoginEdit && LoginRef.current.focus();
+      !isLoginEdit && LoginRef.current?.focus();
       setLoginEdit(!isLoginEdit);
     }
     if (param === "password") {
-      !isPasswordEdit && PassRef.current.focus();
+      !isPasswordEdit && PassRef.current?.focus();
       setPasswordEdit(!isPasswordEdit);
     }
     setChangeButtons(true);
@@ -127,8 +127,7 @@ const PersonalAreaForm = () => {
           <Button
             type="secondary"
             size="medium"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               dispatch(getUserData());
             }}
           >

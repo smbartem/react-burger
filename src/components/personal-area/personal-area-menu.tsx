@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { Redirect, NavLink } from "react-router-dom";
 import { makeLogout } from "../../services/actions/authorization-actions";
 import styles from "./personal-area-form.module.css";
 
-const PersonalAreaMenu = ({ description }) => {
+const PersonalAreaMenu: FC<{ description: string }> = ({ description }) => {
   const dispatch = useDispatch();
   const { error, redirectToLogin } = useSelector(
     (store) => store.authorizationReducer

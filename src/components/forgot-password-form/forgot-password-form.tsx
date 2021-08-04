@@ -2,7 +2,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { Link, Redirect } from "react-router-dom";
 import styles from "./forgot-password-form.module.css";
 import {
@@ -53,8 +53,7 @@ const ForgotPasswordForm = () => {
         <Button
           type="primary"
           size="medium"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             dispatch(restorePassword(formEmail));
           }}
         >

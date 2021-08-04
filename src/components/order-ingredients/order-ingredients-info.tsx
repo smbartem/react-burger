@@ -1,7 +1,8 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FC } from "react";
 import styles from "./order-ingredients.module.css";
 
-const OrderIngredientInfo = ({ ingredient }) => {
+const OrderIngredientInfo: FC<{ingredient: [string, number]}> = ({ ingredient }) => {
   const [el, qty] = ingredient;
   const element = JSON.parse(el);
   return (

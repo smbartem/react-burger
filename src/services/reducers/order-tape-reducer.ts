@@ -1,3 +1,4 @@
+import { TOrderTapeActions } from "../actions/order-tape-actions";
 import {
   WS_ORDER_TAPE_CONNECTION_SUCCESS,
   WS_ORDER_TAPE_GET_MESSAGE,
@@ -13,7 +14,10 @@ export const initialState = {
   errorWSOrderTape: null,
 };
 
-export const wsOrderTapeReducer = (state = initialState, action) => {
+export const wsOrderTapeReducer = (
+  state = initialState,
+  action: TOrderTapeActions
+) => {
   switch (action.type) {
     case WS_ORDER_TAPE_CONNECTION_SUCCESS: {
       return {
@@ -23,7 +27,7 @@ export const wsOrderTapeReducer = (state = initialState, action) => {
       };
     }
     case WS_ORDER_TAPE_GET_MESSAGE: {
-      const { total, totalToday, orders } = JSON.parse(action.payload);
+      const { total, totalToday, orders } = action.payload;
       return {
         ...state,
         total,

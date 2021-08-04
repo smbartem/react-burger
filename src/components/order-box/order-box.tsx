@@ -1,18 +1,19 @@
 import * as _ from "lodash";
-import { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useCallback, useEffect, useState, FC } from "react";
+import { useSelector } from "../../services/hooks";
 import style from "./order-box.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { TOrderBox, TData } from "../../services/types";
 
-const OrderBox = ({ element }) => {
+const OrderBox: FC<TOrderBox> = ({ element }) => {
   const { data } = useSelector((store) => store.appReducer);
-  const [ingredients, setIngredients] = useState(null);
+  const [ingredients, setIngredients] = useState<null | Array<TData>>(null);
 
   useEffect(() => {
     element.ingredients &&
       setIngredients(
         element.ingredients.map(
-          (el) => data.filter((elem) => elem._id === el)[0]
+          (el) => [...data].filter((elem: TData) => elem._id === el)[0]
         )
       );
   }, [data, element]);
@@ -35,8 +36,6 @@ const OrderBox = ({ element }) => {
     const GMT = (dateNow.getHours() - dateNow.getUTCHours())
     return `${outputDate}, ${outputTime} i-GMT${GMT > 0 ? `+${GMT}` : GMT}`;
   }, [element?.createdAt]);
-
-  if (!element) return "";
 
   return (
     <div className={style.container}>

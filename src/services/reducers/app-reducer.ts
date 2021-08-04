@@ -5,10 +5,12 @@ import {
   SET_ORDER_NUMBER,
   DELETE_INGREDIENT_FROM_INGREDIENTS,
   REPLACE_INNER_DRAG_INGREDIENT,
-  SET_ADDED_INGREDIENT
-} from "../../services/actions/app-actions";
+  SET_ADDED_INGREDIENT,
+} from "../actions/app-actions";
+import { TAppReducerInitialState, TData } from "../types";
+import { TAppActions } from "../actions/app-actions";
 
-export const initialState = {
+export const initialState: TAppReducerInitialState = {
   data: null,
   error: null,
   bun: null,
@@ -17,7 +19,7 @@ export const initialState = {
   orderNumber: null,
 };
 
-export const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action: TAppActions) => {
   switch (action.type) {
     case SET_DATA: {
       return {
@@ -36,15 +38,15 @@ export const appReducer = (state = initialState, action) => {
         action.ingredient.type === "bun"
           ? { ...state, bun: action.ingredient }
           : {
-            ...state,
-            ingredients: [
-              ...state.ingredients,
-              {
-                ...action.ingredient,
-                key: _.uniqueId(action.ingredient._id),
-              },
-            ],
-          };
+              ...state,
+              ingredients: [
+                ...state.ingredients,
+                {
+                  ...action.ingredient,
+                  key: _.uniqueId(action.ingredient._id),
+                },
+              ],
+            };
       return { ...newState };
     }
     case SET_ORDER_NUMBER: {
@@ -58,21 +60,23 @@ export const appReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT_FROM_INGREDIENTS: {
       return {
         ...state,
-        ingredients: state.ingredients.filter((el) => el.key !== action.key)
-      }
+        ingredients: state.ingredients.filter(
+          (el: TData) => el.key !== action.key
+        ),
+      };
     }
     case REPLACE_INNER_DRAG_INGREDIENT: {
       const dragCard = [...state.ingredients][action.dragIndex];
-      if (!dragCard){return}
-        const newArray = [
-          ...state.ingredients,
-        ]
-        newArray.splice(action.dragIndex, 1)
-        newArray.splice(action.hoverIndex, 0, dragCard)
-        return { 
-          ...state, 
-          ingredients: newArray
-        };
+      if (!dragCard) {
+        return;
+      }
+      const newArray = [...state.ingredients];
+      newArray.splice(action.dragIndex, 1);
+      newArray.splice(action.hoverIndex, 0, dragCard);
+      return {
+        ...state,
+        ingredients: newArray,
+      };
     }
     default: {
       return state;

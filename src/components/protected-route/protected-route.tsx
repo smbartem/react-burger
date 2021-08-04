@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
+import { FC, ReactNode } from "react";
+import { useSelector } from "../../services/hooks";
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = ({ children, path, onlyUnAuth = false }) => {
-  const authorized = useSelector(
-    (store) => store.authorizationReducer.authorized
+const ProtectedRoute: FC<{children: ReactNode, path: string, onlyUnAuth: boolean}> = ({ children, path, onlyUnAuth = false }) => {
+  const { authorized } = useSelector(
+    (store) => store.authorizationReducer
   );
 
   return (
