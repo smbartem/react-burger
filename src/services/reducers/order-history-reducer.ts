@@ -1,5 +1,5 @@
 import { TOrderHistoryActions } from "../actions/order-history-actions";
-import { TOrderHistoryReducerInitialState } from "../types";
+import { TOrderHistoryReducerState } from "../types";
 import {
   WS_ORDER_HISTORY_CONNECTION_SUCCESS,
   WS_ORDER_HISTORY_GET_MESSAGE,
@@ -7,7 +7,7 @@ import {
   WS_ORDER_HISTORY_CONNECTION_CLOSED,
 } from "../actions/order-history-actions";
 
-export const initialState: TOrderHistoryReducerInitialState = {
+export const initialState: TOrderHistoryReducerState = {
   wsOrderHistoryConnected: false,
   orders: null,
   errorWSOrderHistory: null,
@@ -16,7 +16,7 @@ export const initialState: TOrderHistoryReducerInitialState = {
 export const wsOrderHistoryReducer = (
   state = initialState,
   action: TOrderHistoryActions
-) => {
+): TOrderHistoryReducerState => {
   switch (action.type) {
     case WS_ORDER_HISTORY_CONNECTION_SUCCESS: {
       return {
@@ -36,7 +36,7 @@ export const wsOrderHistoryReducer = (
         ...state,
         errorWSOrderHistory:
           "Ошибка соединения. Попробуйте перезагрузить страницу, отключить блокировщик рекламы и перелогиниться",
-        wsOrderTapeConnected: false,
+        wsOrderHistoryConnected: false,
       };
     }
     case WS_ORDER_HISTORY_CONNECTION_CLOSED: {

@@ -1,15 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { FC } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import styles from "./burger-ingredients.module.css";
+import { TIngredient } from "../../services/types";
 
-const Ingredient = (props) => {
-  const { data, counter } = props;
-
+const Ingredient: FC<TIngredient> = ({ data, counter }) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
     item: data,
@@ -17,12 +15,12 @@ const Ingredient = (props) => {
       isDrag: monitor.isDragging(),
     }),
   });
-  const dragStyle = isDrag ? { opacity: "0.1" } : null;
+  const dragStyle = isDrag ? { opacity: "0.1" } : { opacity: "1" };
   return (
     <div ref={dragRef} style={dragStyle}>
       <div>
         <div className={`${styles.ingredient} pl-4 pr-4`}>
-          <img src={data.image} alt={data.name} />
+          <img src={data?.image} alt={data?.name} />
           <div className={`${styles.ingredientPrice} mt-1 mb-1`}>
             <p className="text text_type_digits-default mr-1">{data.price}</p>
             <CurrencyIcon type="primary" />
@@ -37,21 +35,6 @@ const Ingredient = (props) => {
       </div>
     </div>
   );
-};
-
-Ingredient.propTypes = {
-  counter: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
-    PropTypes.number.isRequired,
-  ]),
-  data: PropTypes.oneOfType([
-    PropTypes.oneOf([null]).isRequired,
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    }),
-  ]),
 };
 
 export default Ingredient;

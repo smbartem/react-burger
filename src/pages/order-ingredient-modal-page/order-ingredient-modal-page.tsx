@@ -1,13 +1,14 @@
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { useHistory, useParams } from "react-router-dom";
 import OrderIngredientModal from "../../components/order-ingredient-modal/order-ingredient-modal";
+import { FC } from "react";
 
 const modalRoot = document.getElementById("react-modals");
 
-export const OrderIngredientModalPage = ({ profile }) => {
-  const history = useHistory();
-  const { id } = useParams();
+export const OrderIngredientModalPage: FC<{ profile: boolean }> = ({ profile }) => {
+  const history: any = useHistory();
+  const { id } = useParams<{id: string}>();
   const selectedOrder = useSelector((store) => {
     return !profile
       ? store.wsOrderTapeReducer.orders &&
@@ -21,13 +22,13 @@ export const OrderIngredientModalPage = ({ profile }) => {
 
   const ingredients = selectedOrder?.ingredients
     .map((el) => data.filter((elem) => elem._id === el)[0])
-    .reduce((acc, element) => {
+    .reduce((acc: {[k: string]: number}, element) => {
       const key = JSON.stringify(element);
       acc[key] = (acc[key] || 0) + 1;
       return acc;
     }, {});
 
-  return ReactDOM.createPortal(
+  return modalRoot ? ReactDOM.createPortal(
     <OrderIngredientModal
       order={selectedOrder}
       ingredients={ingredients}
@@ -36,5 +37,5 @@ export const OrderIngredientModalPage = ({ profile }) => {
       }}
     />,
     modalRoot
-  );
+  ) : null;
 };

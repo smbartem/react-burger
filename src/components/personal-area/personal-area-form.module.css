@@ -26,3 +26,22 @@
 .colorActive {
   color: white;
 }
+
+.cancelButton {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+  padding: 16px 40px;
+  color: #4c4cff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 64px;
+  transition: all 0.3s ease-in;
+}
+
+.cancelButton:hover {
+  color: white;
+  opacity: 0.9;
+}

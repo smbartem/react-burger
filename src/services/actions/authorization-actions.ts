@@ -95,7 +95,7 @@ export interface ISetRedirectToLoginAction {
 
 export interface ISetConfirmationCodeAction {
   readonly type: typeof SET_CONFIRMATION_CODE;
-  formConfirmationCode: string | number;
+  formConfirmationCode: string;
 }
 
 export interface IUnsetErrorAction {

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector  } from "../../services/hooks";
 import { getData } from "../../services/actions/app-actions";
 import ModalSwitch from "./modal-switch";
 import { WS_ORDER_TAPE_CONNECTION_INIT } from "../../services/actions/order-tape-actions";

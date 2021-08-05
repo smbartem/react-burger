@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useRef } from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -10,10 +9,11 @@ import {
   DELETE_INGREDIENT_FROM_INGREDIENTS,
   REPLACE_INNER_DRAG_INGREDIENT,
 } from "../../services/actions/app-actions";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks";
+import { TBurgerConstructorInnerIngredients } from "../../services/types";
 
-const BurgerConstructorInnerIngredients = ({ el, index }) => {
-  const ref = useRef(null);
+const BurgerConstructorInnerIngredients: FC<TBurgerConstructorInnerIngredients> = ({ el, index }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
   
   const [, dropInner] = useDrop({
@@ -21,7 +21,7 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    hover(item, monitor) {
+    hover(item: any, monitor: any) {
       if (!ref.current) {
         return;
       }
@@ -56,7 +56,7 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
     }),
   });
 
-  const dragElStyle = isDragging ? { opacity: "0" } : null;
+  const dragElStyle = isDragging ? { opacity: "0" } : { opacity: "1" };
 
   dragInner(dropInner(ref));
 
@@ -82,15 +82,6 @@ const BurgerConstructorInnerIngredients = ({ el, index }) => {
       />
     </div>
   );
-};
-
-BurgerConstructorInnerIngredients.propTypes = {
-  index: PropTypes.number.isRequired,
-  el: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    }),
 };
 
 export default BurgerConstructorInnerIngredients;

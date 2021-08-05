@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef,  } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Button,
   Input,
@@ -26,9 +26,9 @@ const ResetPasswordForm = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: UNSET_ERROR })
-    }
-  }, [dispatch])
+      dispatch({ type: UNSET_ERROR });
+    };
+  }, [dispatch]);
 
   return (
     <>
@@ -43,7 +43,13 @@ const ResetPasswordForm = () => {
           {error}
         </h2>
       )}
-      <form className={`${styles.flexColumnCenter} mb-20`}>
+      <form
+        className={`${styles.flexColumnCenter} mb-20`}
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(setNewPassword(formPassword, formConfirmationCode));
+        }}
+      >
         <div className="mb-6">
           <Input
             type={isPasswordShow ? "text" : "password"}
@@ -73,13 +79,7 @@ const ResetPasswordForm = () => {
             }}
           />
         </div>
-        <Button
-          type="primary"
-          size="medium"
-          onClick={() => {
-            dispatch(setNewPassword(formPassword, formConfirmationCode));
-          }}
-        >
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
       </form>

@@ -1,4 +1,5 @@
 import { TOrderTapeActions } from "../actions/order-tape-actions";
+import { TOrderTapeReducerState } from "../types";
 import {
   WS_ORDER_TAPE_CONNECTION_SUCCESS,
   WS_ORDER_TAPE_GET_MESSAGE,
@@ -6,7 +7,7 @@ import {
   WS_ORDER_TAPE_CONNECTION_CLOSED,
 } from "../actions/order-tape-actions";
 
-export const initialState = {
+export const initialState: TOrderTapeReducerState = {
   wsOrderTapeConnected: false,
   total: null,
   totalToday: null,
@@ -17,7 +18,7 @@ export const initialState = {
 export const wsOrderTapeReducer = (
   state = initialState,
   action: TOrderTapeActions
-) => {
+): TOrderTapeReducerState => {
   switch (action.type) {
     case WS_ORDER_TAPE_CONNECTION_SUCCESS: {
       return {

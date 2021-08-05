@@ -36,7 +36,13 @@ const ForgotPasswordForm = () => {
           {error}
         </h2>
       )}
-      <form className={`${styles.flexColumnCenter} mb-20`}>
+      <form
+        className={`${styles.flexColumnCenter} mb-20`}
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(restorePassword(formEmail));
+        }}
+      >
         <div className="mb-6">
           <Input
             type={"email"}
@@ -50,13 +56,7 @@ const ForgotPasswordForm = () => {
             }
           />
         </div>
-        <Button
-          type="primary"
-          size="medium"
-          onClick={() => {
-            dispatch(restorePassword(formEmail));
-          }}
-        >
+        <Button type="primary" size="medium">
           Восстановить
         </Button>
       </form>
@@ -76,7 +76,7 @@ const ForgotPasswordForm = () => {
         <Redirect
           to={{
             pathname: "/reset-password",
-            state: 'forgot-password',
+            state: "forgot-password",
           }}
         />
       )}

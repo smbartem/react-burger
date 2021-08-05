@@ -9,7 +9,7 @@ import {
   SET_FORM_EMAIL,
   SET_FORM_PASSWORD,
   UNSET_ERROR,
-  makeLogin
+  makeLogin,
 } from "../../services/actions/authorization-actions";
 import styles from "./login-form.module.css";
 import { useEffect } from "react";
@@ -22,15 +22,25 @@ const LoginForm = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: UNSET_ERROR })
-    }
-  }, [dispatch])
+      dispatch({ type: UNSET_ERROR });
+    };
+  }, [dispatch]);
 
   return (
     <>
       <h2 className="mt-20 mb-6 text text_type_main-medium">Вход</h2>
-      {error && <h2 className="mb-6 text text_type_main-medium" style={{textAlign: "center"}}>{error}</h2>}
-      <form className={`${styles.flexColumnCenter} mb-20`}>
+      {error && (
+        <h2
+          className="mb-6 text text_type_main-medium"
+          style={{ textAlign: "center" }}
+        >
+          {error}
+        </h2>
+      )}
+      <form className={`${styles.flexColumnCenter} mb-20`} onSubmit={(event) => {
+            event.preventDefault();
+            dispatch(makeLogin(formEmail, formPassword));
+          }}>
         <div className="mb-6">
           <EmailInput
             name={"email"}
@@ -55,9 +65,10 @@ const LoginForm = () => {
             }
           />
         </div>
-        <Button type="primary" size="medium" onClick={() => {
-          dispatch(makeLogin(formEmail, formPassword));
-        }}>
+        <Button
+          type="primary"
+          size="medium"
+        >
           Войти
         </Button>
       </form>

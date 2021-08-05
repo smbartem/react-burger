@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { Link, useLocation } from "react-router-dom";
 import * as _ from "lodash";
 import AppHeader from "../../components/app-header/app-header";

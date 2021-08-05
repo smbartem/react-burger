@@ -13,17 +13,17 @@ export type TCookiePropsType = {
   path?: string;
 } & { [extraParams: string]: string | number | boolean };
 
-export type TInterfaceReducerInitialState = {
+export type TInterfaceReducerState = {
   currentBurgerIngredientsName: string;
 };
 
-export type TAppReducerInitialState = {
-  data: null;
-  error: null;
-  bun: null;
-  ingredients: [];
-  selectedIngredient: null;
-  orderNumber: null;
+export type TAppReducerState = {
+  data: [] | TData[];
+  error: null | string;
+  bun: null | TData;
+  ingredients: [] | TData[];
+  selectedIngredient: null | TData;
+  orderNumber: null | number | string;
 };
 
 export type TData = {
@@ -34,7 +34,7 @@ export type TData = {
   fat: string | number;
   carbohydrates: string | number;
   calories: string | number;
-  price: string | number;
+  price: number;
   image: string;
   image_mobile: string;
   image_large: string;
@@ -55,8 +55,8 @@ export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;
 
-export type TAuthorizationReducerInitialState = {
-  error: null;
+export type TAuthorizationReducerState = {
+  error: null | string;
   formName: string;
   formEmail: string;
   formPassword: string;
@@ -79,23 +79,31 @@ export type TOrderData = {
   number: number;
 };
 
-export type TOrderHistoryReducerInitialState = {
+export type TOrderHistoryReducerState = {
   wsOrderHistoryConnected: boolean;
-  orders: null;
-  errorWSOrderHistory: null;
+  orders: null | TOrderData[];
+  errorWSOrderHistory: null | string;
+};
+
+export type TOrderTapeReducerState = {
+  wsOrderTapeConnected: boolean;
+  total: null | string | number;
+  totalToday: null | string | number;
+  orders: null | TOrderData[],
+  errorWSOrderTape: null | string,
 };
 
 export type TOrderIngredients = {
-  order: TOrderData;
+  order: TOrderData | null;
   handleModalClose?: () => void;
   isModal?: boolean;
-  ingredients: {[k: string]: number}
+  ingredients: {[k: string]: number} | undefined;
 }
 
 export type TOrderIngredientsModal = {
-  order: TOrderData;
+  order: TOrderData | null;
   handleModalClose: () => void;
-  ingredients: {[k: string]: number}
+  ingredients: {[k: string]: number} | undefined
 }
 
 export type TOrderBox = {
@@ -106,4 +114,14 @@ export type TModalWindow = {
   children: ReactNode;
   title: string;
   handleModalClose: () => void;
+}
+
+export type TIngredient = {
+  data: TData;
+  counter: null | number;
+}
+
+export type TBurgerConstructorInnerIngredients = {
+  el: TData;
+  index: number;
 }

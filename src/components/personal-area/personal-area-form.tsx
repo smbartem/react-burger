@@ -124,15 +124,15 @@ const PersonalAreaForm = () => {
       </div>
       {changeButtons && (
         <div>
-          <Button
-            type="secondary"
-            size="medium"
-            onClick={() => {
+          <span
+          className={styles.cancelButton}
+            onClick={(e) => {
+              e.preventDefault()
               dispatch(getUserData());
             }}
           >
             Отмена
-          </Button>
+          </span>
           <Button type="primary" size="medium">
             Сохранить
           </Button>

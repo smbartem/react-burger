@@ -1,5 +1,5 @@
 import { TAuthorizationActions } from "../actions/authorization-actions";
-import { TAuthorizationReducerInitialState } from "../types";
+import { TAuthorizationReducerState } from "../types";
 import {
   SET_FORM_NAME,
   SET_FORM_EMAIL,
@@ -20,7 +20,7 @@ import {
   UNSET_REDIRECT_TO_ORDER_DETAILS,
 } from "../actions/authorization-actions";
 
-export const initialState: TAuthorizationReducerInitialState = {
+export const initialState: TAuthorizationReducerState = {
   error: null,
   formName: "",
   formEmail: "",
@@ -37,7 +37,7 @@ export const initialState: TAuthorizationReducerInitialState = {
 export const authorizationReducer = (
   state = initialState,
   action: TAuthorizationActions
-) => {
+): TAuthorizationReducerState => {
   switch (action.type) {
     case SET_FORM_NAME: {
       return {

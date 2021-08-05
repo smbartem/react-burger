@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import AppHeader from "../../components/app-header/app-header";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import styles from "./burger-ingredient-page.module.css";
 
 export const BurgerIngredientPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<{id?: string}>();
   const selectedIngredient = useSelector((store) =>
     store.appReducer.data
       && store.appReducer.data.filter((el) => el._id === id)[0]

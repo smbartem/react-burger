@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { TData } from "../../services/types";
+import { useSelector, useDispatch } from "../../services/hooks";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -22,8 +22,8 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const bunTotalPrice = bun ? bun.price * 2 : 0;
-  const ingredientsTotalPrice = ingredients.reduce(
-    (acc, el) => (acc += el.price),
+  const ingredientsTotalPrice = [...ingredients].reduce(
+    (acc: number, el: TData) => (acc += el.price),
     0
   );
   const totalPrice = bunTotalPrice + ingredientsTotalPrice;
@@ -40,7 +40,7 @@ const BurgerConstructor = () => {
 
   const burgerConstructorIngredientPlaceStyle = isDragContainer
     ? { border: "1px solid lightgreen" }
-    : null;
+    : { border: "0" };
 
   return (
     <section className={styles.burgerConstructor}>
@@ -63,7 +63,7 @@ const BurgerConstructor = () => {
         )}
         {
           <div className={`pr-2 ${styles.scrollbar}`} data-test="ingredientsScrollbarContainer">
-            {ingredients.map((el, index) => (
+            {ingredients.map((el: TData, index: number) => (
               <BurgerConstructorInnerIngredients
                 el={el}
                 index={index}

@@ -7,11 +7,11 @@ import {
   REPLACE_INNER_DRAG_INGREDIENT,
   SET_ADDED_INGREDIENT,
 } from "../actions/app-actions";
-import { TAppReducerInitialState, TData } from "../types";
+import { TAppReducerState, TData } from "../types";
 import { TAppActions } from "../actions/app-actions";
 
-export const initialState: TAppReducerInitialState = {
-  data: null,
+export const initialState: TAppReducerState = {
+  data: [],
   error: null,
   bun: null,
   ingredients: [],
@@ -19,7 +19,7 @@ export const initialState: TAppReducerInitialState = {
   orderNumber: null,
 };
 
-export const appReducer = (state = initialState, action: TAppActions) => {
+export const appReducer = (state = initialState, action: TAppActions): TAppReducerState => {
   switch (action.type) {
     case SET_DATA: {
       return {
@@ -68,7 +68,9 @@ export const appReducer = (state = initialState, action: TAppActions) => {
     case REPLACE_INNER_DRAG_INGREDIENT: {
       const dragCard = [...state.ingredients][action.dragIndex];
       if (!dragCard) {
-        return;
+        return {
+          ...state
+        }
       }
       const newArray = [...state.ingredients];
       newArray.splice(action.dragIndex, 1);

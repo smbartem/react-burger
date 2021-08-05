@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { useSelector } from "../../services/hooks";
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute: FC<{children: ReactNode, path: string, onlyUnAuth: boolean}> = ({ children, path, onlyUnAuth = false }) => {
+const ProtectedRoute: FC<{children: ReactNode, path: string, onlyUnAuth: boolean, exact: boolean}> = ({ children, path, onlyUnAuth = false, exact=true }) => {
   const { authorized } = useSelector(
     (store) => store.authorizationReducer
   );
@@ -10,7 +10,7 @@ const ProtectedRoute: FC<{children: ReactNode, path: string, onlyUnAuth: boolean
   return (
     <Route
       path={path}
-      exact={true}
+      exact={exact}
       render={() => {
         if (authorized && onlyUnAuth) {
           return children;

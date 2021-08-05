@@ -39,7 +39,7 @@ describe("wsOrderHistoryReducer tests", () => {
       ...initialState,
       errorWSOrderHistory:
         "Ошибка соединения. Попробуйте перезагрузить страницу, отключить блокировщик рекламы и перелогиниться",
-      wsOrderTapeConnected: false,
+      wsOrderHistoryConnected: false,
     });
   });
   it("handle WS_ORDER_HISTORY_CONNECTION_CLOSED", () => {

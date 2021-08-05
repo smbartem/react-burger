@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { useParams } from "react-router-dom";
 import AppHeader from "../../components/app-header/app-header";
 import OrderIngredients from "../../components/order-ingredients/order-ingredients";
+import { FC } from "react";
 
-export const OrderIngredientPage = ({ profile }) => {
-  const { id } = useParams();
+export const OrderIngredientPage: FC<{ profile: boolean }> = ({ profile }) => {
+  const { id } = useParams<{id: string}>();
 
   const selectedOrder = useSelector((store) => {
     return !profile
@@ -20,7 +21,7 @@ export const OrderIngredientPage = ({ profile }) => {
 
   const ingredients = selectedOrder?.ingredients
     .map((el) => data?.filter((elem) => elem._id === el)[0])
-    .reduce((acc, element) => {
+    .reduce((acc: {[k: string]: number}, element) => {
       const key = JSON.stringify(element);
       acc[key] = (acc[key] || 0) + 1;
       return acc;

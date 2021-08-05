@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import Ingredient from "./ingredient";
 import styles from "./burger-ingredients.module.css";
 import { SET_CURRENT_BURGER_INGREDIENTS_NAME } from "../../services/actions/interface-actions";
-import { TData } from "../../services/types";
 
 const BurgerIngredients = () => {
   let location = useLocation();
