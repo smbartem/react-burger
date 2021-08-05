@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import { useSelector } from "../../services/hooks";
 import doneLogo from "../../images/done.svg";
 
-const OrderDetails = () => {
+const OrderDetails: FC = () => {
   const { orderNumber } = useSelector((store) => store.appReducer);
   return (
     <>

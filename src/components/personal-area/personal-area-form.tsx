@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   Input,
   Button,
@@ -14,7 +14,7 @@ import {
   UNSET_ERROR,
 } from "../../services/actions/authorization-actions";
 
-const PersonalAreaForm = () => {
+const PersonalAreaForm: FC = () => {
   const { formEmail, formName, formPassword } = useSelector(
     (store) => store.authorizationReducer
   );

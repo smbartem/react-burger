@@ -5,8 +5,9 @@ import AppHeader from "../../components/app-header/app-header";
 import PersonalAreaMenu from "../../components/personal-area/personal-area-menu";
 import styles from "./order-history.module.css";
 import OrderBox from "../../components/order-box/order-box";
+import { FC } from "react";
 
-export const OrdersHistoryPage = () => {
+export const OrdersHistoryPage: FC = () => {
   const { errorWSOrderHistory, orders } = useSelector(
     (store) => store.wsOrderHistoryReducer
   );

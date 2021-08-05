@@ -12,9 +12,9 @@ import {
   makeLogin,
 } from "../../services/actions/authorization-actions";
 import styles from "./login-form.module.css";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-const LoginForm = () => {
+const LoginForm: FC = () => {
   const { formEmail, formPassword, error, redirectToMain } = useSelector(
     (store) => store.authorizationReducer
   );

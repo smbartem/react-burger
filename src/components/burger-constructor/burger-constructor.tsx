@@ -11,8 +11,9 @@ import styles from "./burger-constructor.module.css";
 import { getOrder } from "../../services/actions/app-actions";
 import { SET_ADDED_INGREDIENT } from "../../services/actions/app-actions";
 import BurgerConstructorInnerIngredients from "./burger-constructor-ingredients";
+import { FC } from "react";
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   let location = useLocation();
 
   const { bun, ingredients } = useSelector((store) => store.appReducer);

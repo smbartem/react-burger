@@ -1,7 +1,8 @@
 import AppHeader from "../../components/app-header/app-header";
 import { Link } from "react-router-dom";
+import { FC } from "react";
 
-export const NotFoundPage = () => (
+export const NotFoundPage: FC = () => (
   <>
     <AppHeader />
     <div

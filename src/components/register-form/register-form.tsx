@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -16,7 +16,7 @@ import {
 } from "../../services/actions/authorization-actions";
 import styles from "./register-form.module.css";
 
-const RegisterForm = () => {
+const RegisterForm: FC = () => {
   const { formName, formEmail, formPassword, error, redirectToMain } = useSelector(
     (store) => store.authorizationReducer
   );

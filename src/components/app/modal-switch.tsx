@@ -16,11 +16,11 @@ import {
   OrderIngredientModalPage,
   OrderIngredientPage,
 } from "../../pages";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch } from "../../services/hooks";
 import { getUserData } from "../../services/actions/authorization-actions";
 
-function ModalSwitch() {
+const ModalSwitch: FC = () => {
   const location: any = useLocation();
   const history: any = useHistory();
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function ModalSwitch() {
         <ProtectedRoute path="/profile" onlyUnAuth={true} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders" onlyUnAuth={true} exact={true}>
+        <ProtectedRoute path="/profile/orders" onlyUnAuth={true} exact={false}>
           <OrdersHistoryPage />
         </ProtectedRoute>
         <Route path="/profile/orders/:id" exact={true}>
@@ -76,17 +76,11 @@ function ModalSwitch() {
       </Switch>
       {background && (
         <>
-        {
-          /*
-            Не знаю каким другим способом показать OrdersHistoryPage, при открытии модального окна
-          */
-        }
           <ProtectedRoute
             path="/profile/orders/:id"
             onlyUnAuth={true}
             exact={true}
           >
-            <OrdersHistoryPage />
             <OrderIngredientModalPage profile={true} />
           </ProtectedRoute>
           <Route path="/ingredients/:id" exact={true}>

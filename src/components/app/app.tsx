@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { useDispatch, useSelector  } from "../../services/hooks";
 import { getData } from "../../services/actions/app-actions";
@@ -6,7 +6,7 @@ import ModalSwitch from "./modal-switch";
 import { WS_ORDER_TAPE_CONNECTION_INIT } from "../../services/actions/order-tape-actions";
 import { WS_ORDER_HISTORY_CONNECTION_INIT } from "../../services/actions/order-history-actions";
 
-function App() {
+const App: FC = () => {
   const { authorized } = useSelector((store) => store.authorizationReducer)
   const dispatch = useDispatch();
 

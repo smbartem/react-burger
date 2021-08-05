@@ -2,8 +2,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "../../services/hooks";
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
+import { FC } from "react";
 
-export const BurgerIngredientModal = () => {
+export const BurgerIngredientModal: FC = () => {
   const history = useHistory();
   const { id } = useParams<{id?: string}>();
   const selectedIngredient = useSelector((store) =>

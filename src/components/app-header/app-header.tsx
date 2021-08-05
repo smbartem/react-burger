@@ -7,8 +7,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRouteMatch } from "react-router-dom";
 import styles from "./header.module.css";
+import { FC } from "react";
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const isConstructor = !!useRouteMatch({ path: "/", exact: true });
   const isProfile = !!useRouteMatch("/profile");
   const isOrderTape = !!useRouteMatch("/feed");

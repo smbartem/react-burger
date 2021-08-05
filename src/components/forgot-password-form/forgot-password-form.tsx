@@ -10,9 +10,9 @@ import {
   restorePassword,
   UNSET_ERROR,
 } from "../../services/actions/authorization-actions";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-const ForgotPasswordForm = () => {
+const ForgotPasswordForm: FC = () => {
   const dispatch = useDispatch();
   const { formEmail, error, redirectToResetPassword } = useSelector(
     (store) => store.authorizationReducer

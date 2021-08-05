@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, FC } from "react";
 import {
   Button,
   Input,
@@ -13,7 +13,7 @@ import {
   setNewPassword,
 } from "../../services/actions/authorization-actions";
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm: FC = () => {
   const dispatch = useDispatch();
   const { formPassword, formConfirmationCode, error, redirectToLogin } =
     useSelector((store) => store.authorizationReducer);

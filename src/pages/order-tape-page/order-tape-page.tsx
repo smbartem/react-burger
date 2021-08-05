@@ -4,8 +4,9 @@ import * as _ from "lodash";
 import AppHeader from "../../components/app-header/app-header";
 import style from "./order-tape-page.module.css";
 import OrderBox from "../../components/order-box/order-box";
+import { FC } from "react";
 
-export const OrderTapePage = () => {
+export const OrderTapePage: FC = () => {
   const { total, totalToday, orders, errorWSOrderTape } = useSelector(
     (store) => store.wsOrderTapeReducer
   );

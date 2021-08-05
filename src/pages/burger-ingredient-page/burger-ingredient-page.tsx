@@ -3,8 +3,9 @@ import { useSelector } from "../../services/hooks";
 import AppHeader from "../../components/app-header/app-header";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import styles from "./burger-ingredient-page.module.css";
+import { FC } from "react";
 
-export const BurgerIngredientPage = () => {
+export const BurgerIngredientPage: FC = () => {
   const { id } = useParams<{id?: string}>();
   const selectedIngredient = useSelector((store) =>
     store.appReducer.data
