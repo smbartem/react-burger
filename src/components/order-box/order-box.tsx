@@ -52,8 +52,8 @@ const OrderBox: FC<TOrderBox> = ({ element }) => {
             if (index < 5) {
               return (
                 <img
-                  src={el.image_mobile}
-                  alt={el.name}
+                  src={el?.image_mobile}
+                  alt={el?.name}
                   className={style.ingredientImage}
                   key={_.uniqueId()}
                 />
@@ -65,7 +65,7 @@ const OrderBox: FC<TOrderBox> = ({ element }) => {
               <p
                 key={_.uniqueId()}
                 style={{
-                  backgroundImage: `url(${ingredients[5].image_mobile})`,
+                  backgroundImage: `url(${ingredients[5]?.image_mobile})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                 }}
@@ -78,7 +78,7 @@ const OrderBox: FC<TOrderBox> = ({ element }) => {
         </div>
         <div className={style.priceContainer}>
           <p className="text text_type_digits-default mr-2">
-            {ingredients?.reduce((acc, el) => (acc += Number(el.price)), 0)}
+            {ingredients?.reduce((acc, el) => (acc += Number(el?.price)), 0)}
           </p>
           <CurrencyIcon type="primary" />
         </div>

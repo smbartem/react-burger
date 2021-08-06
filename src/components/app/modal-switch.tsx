@@ -52,12 +52,12 @@ const ModalSwitch: FC = () => {
         <ProtectedRoute path="/profile" onlyUnAuth={true} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
+        <Route path="/profile/orders/:id" exact={false}>
+          <OrderIngredientPage profile={true} />
+        </Route>
         <ProtectedRoute path="/profile/orders" onlyUnAuth={true} exact={false}>
           <OrdersHistoryPage />
         </ProtectedRoute>
-        <Route path="/profile/orders/:id" exact={true}>
-          <OrderIngredientPage profile={true} />
-        </Route>
         <Route path="/feed" exact={true}>
           <OrderTapePage />
         </Route>
@@ -79,7 +79,7 @@ const ModalSwitch: FC = () => {
           <ProtectedRoute
             path="/profile/orders/:id"
             onlyUnAuth={true}
-            exact={true}
+            exact={false}
           >
             <OrderIngredientModalPage profile={true} />
           </ProtectedRoute>
