@@ -11,7 +11,7 @@ import thunk from "redux-thunk";
 import { orderTapeSocketMiddleware } from "./services/actions/order-tape-actions";
 import { orderHistorySocketMiddleware } from "./services/actions/order-history-actions";
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(

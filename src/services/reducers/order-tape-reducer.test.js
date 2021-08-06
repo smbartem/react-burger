@@ -22,11 +22,11 @@ describe("wsOrderTapeReducer tests", () => {
     expect(
       wsOrderTapeReducer(initialState, {
         type: WS_ORDER_TAPE_GET_MESSAGE,
-        payload: JSON.stringify({
+        payload: {
           total: 1,
           totalToday: 2,
           orders: [{ key: 1 }, { key: 2 }],
-        }),
+        },
       })
     ).toEqual({
       ...initialState,
