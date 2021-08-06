@@ -10,6 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { orderTapeSocketMiddleware } from "./services/actions/order-tape-actions";
 import { orderHistorySocketMiddleware } from "./services/actions/order-history-actions";
+import { BrowserRouter } from "react-router-dom";
 
 export const store = createStore(
   rootReducer,
@@ -24,9 +25,11 @@ export const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <BrowserRouter basename="/react-burger">
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );
